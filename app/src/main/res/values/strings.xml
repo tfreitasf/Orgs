@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Orgs</string>
+    <string name="txt_name">Nome</string>
+    <string name="txt_description">Descrição</string>
+    <string name="txt_price">Preço</string>
+    <string name="txt_cadastrar">SALVAR</string>
+</resources>
