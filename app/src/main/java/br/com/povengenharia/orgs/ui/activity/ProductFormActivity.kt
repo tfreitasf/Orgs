@@ -1,7 +1,6 @@
 package br.com.povengenharia.orgs.ui.activity
 
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
@@ -16,33 +15,37 @@ class ProductFormActivity : AppCompatActivity() {
         setContentView(R.layout.activity_product_form)
 
 
-        val botaoSalvar = findViewById<Button>(R.id.btn_salvar)
-        botaoSalvar.setOnClickListener {
-            val campoNome = findViewById<EditText>(R.id.et_nome)
-            val campoDescricao = findViewById<EditText>(R.id.et_description)
-            val campoPreco = findViewById<EditText>(R.id.et_price)
+        saveNewProduct()
+    }
 
-            val nome = campoNome.text.toString()
-            val descricao = campoDescricao.text.toString()
-            val precoEmTexto = campoPreco.text.toString()
-            val preco = if (precoEmTexto.isBlank()){
-                BigDecimal.ZERO
-            } else{
-                BigDecimal(precoEmTexto)
-            }
-
-            val produtoNovo = Product(
-                name = nome,
-                description = descricao,
-                price = preco
-            )
-
-
-            Log.i("FormularioProdutoActivity", "${produtoNovo.name} ${produtoNovo.description} ${produtoNovo.price}")
-            val dao = ProductsDao()
-            dao.add(produtoNovo)
-            Log.i("FormularioProdutoActivity", "on Create ${dao.getAllProducts()}")
+    private fun saveNewProduct() {
+        val btnSave = findViewById<Button>(R.id.btn_product_form_save)
+        val dao = ProductsDao()
+        btnSave.setOnClickListener {
+            val newProdutct = createNewProductFromForm()
+            dao.add(newProdutct)
             finish()
         }
+    }
+
+    private fun createNewProductFromForm(): Product {
+        val nameField = findViewById<EditText>(R.id.et_product_form_name)
+        val descriptionField = findViewById<EditText>(R.id.et_product_form_description)
+        val priceField = findViewById<EditText>(R.id.et_product_form_price)
+
+        val name = nameField.text.toString()
+        val description = descriptionField.text.toString()
+        val priceInText = priceField.text.toString()
+        val price = if (priceInText.isBlank()) {
+            BigDecimal.ZERO
+        } else {
+            BigDecimal(priceInText)
+        }
+
+        return Product(
+            name = name,
+            description = description,
+            price = price
+        )
     }
 }
