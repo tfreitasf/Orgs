@@ -6,20 +6,23 @@ import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import br.com.povengenharia.orgs.R
 import br.com.povengenharia.orgs.dao.ProductsDao
+import br.com.povengenharia.orgs.databinding.ActivityProductFormBinding
 import br.com.povengenharia.orgs.model.Product
 import java.math.BigDecimal
 
 class ProductFormActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityProductFormBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_product_form)
+        binding = ActivityProductFormBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
 
         saveNewProduct()
     }
 
     private fun saveNewProduct() {
-        val btnSave = findViewById<Button>(R.id.btn_product_form_save)
+        val btnSave = binding.btnProductFormSave
         val dao = ProductsDao()
         btnSave.setOnClickListener {
             val newProdutct = createNewProductFromForm()
@@ -29,9 +32,9 @@ class ProductFormActivity : AppCompatActivity() {
     }
 
     private fun createNewProductFromForm(): Product {
-        val nameField = findViewById<EditText>(R.id.et_product_form_name)
-        val descriptionField = findViewById<EditText>(R.id.et_product_form_description)
-        val priceField = findViewById<EditText>(R.id.et_product_form_price)
+        val nameField = binding.etProductFormName
+        val descriptionField = binding.etProductFormDescription
+        val priceField = binding.etProductFormPrice
 
         val name = nameField.text.toString()
         val description = descriptionField.text.toString()

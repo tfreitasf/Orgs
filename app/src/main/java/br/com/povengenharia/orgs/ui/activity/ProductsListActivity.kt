@@ -7,16 +7,20 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import br.com.povengenharia.orgs.R
 import br.com.povengenharia.orgs.dao.ProductsDao
+import br.com.povengenharia.orgs.databinding.ActivityProductsListBinding
 import br.com.povengenharia.orgs.ui.recyclerview.adapter.ProductsListAdapter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-class ProductsListActivity : AppCompatActivity(R.layout.activity_products_list) {
+class ProductsListActivity : AppCompatActivity() {
 
     val dao = ProductsDao()
     private val adapter = ProductsListAdapter(context = this, products = dao.getAllProducts())
+    private lateinit var binding: ActivityProductsListBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityProductsListBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         configuraRecyclerView()
         configuraFab()
 
@@ -29,7 +33,7 @@ class ProductsListActivity : AppCompatActivity(R.layout.activity_products_list) 
     }
 
     private fun configuraFab() {
-        val fab = findViewById<FloatingActionButton>(R.id.fab_add_product)
+        val fab = binding.fabAddProduct
         fab.setOnClickListener {
             vaiParaFormularioProduto()
         }
@@ -41,7 +45,7 @@ class ProductsListActivity : AppCompatActivity(R.layout.activity_products_list) 
     }
 
     private fun configuraRecyclerView() {
-        val recyclerView = findViewById<RecyclerView>(R.id.rv_product_list)
+        val recyclerView = binding.rvProductList
 
         recyclerView.adapter = adapter
 
