@@ -2,13 +2,13 @@ package br.com.povengenharia.orgs.ui.recyclerview.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import br.com.povengenharia.orgs.R
 import br.com.povengenharia.orgs.databinding.ProductItemBinding
 import br.com.povengenharia.orgs.model.Product
+import java.math.BigDecimal
+import java.text.NumberFormat
+import java.util.Locale
 
 class ProductsListAdapter(
     private val context: Context,
@@ -21,7 +21,13 @@ class ProductsListAdapter(
         fun bind(product: Product) {
             binding.tvProductItemName.text = product.name
             binding.tvProductItemDescription.text = product.description
-            binding.tvProductItemPrice.text = product.price.toPlainString()
+            val priceFormated = formatValueAsBrazilianCurrency(product.price)
+            binding.tvProductItemPrice.text = priceFormated
+        }
+
+        private fun formatValueAsBrazilianCurrency(price: BigDecimal): String? {
+            val currencyFormat = NumberFormat.getCurrencyInstance(Locale("pt", "br"))
+            return currencyFormat.format(price)
         }
     }
 
