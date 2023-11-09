@@ -3,6 +3,7 @@ package br.com.povengenharia.orgs.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import br.com.povengenharia.orgs.R
@@ -23,8 +24,6 @@ class ProductsListActivity : AppCompatActivity() {
         setContentView(binding.root)
         configuraRecyclerView()
         configuraFab()
-
-
     }
 
     override fun onResume() {

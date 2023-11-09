@@ -1,24 +1,35 @@
 package br.com.povengenharia.orgs.ui.activity
 
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import br.com.povengenharia.orgs.R
 import br.com.povengenharia.orgs.dao.ProductsDao
 import br.com.povengenharia.orgs.databinding.ActivityProductFormBinding
+import br.com.povengenharia.orgs.databinding.FormImageBinding
+import br.com.povengenharia.orgs.extensions.TryLoadImage
 import br.com.povengenharia.orgs.model.Product
+import br.com.povengenharia.orgs.ui.dialog.ImageDialogForm
 import java.math.BigDecimal
 
 class ProductFormActivity : AppCompatActivity() {
     private lateinit var binding: ActivityProductFormBinding
+
+    private var url: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityProductFormBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        title = getString(R.string.txt_register_product)
 
         saveNewProduct()
+
+        binding.ivProductFormImage.setOnClickListener {
+            ImageDialogForm(this).show(url){image ->
+                    url = image
+                    binding.ivProductFormImage.TryLoadImage(url)
+                }
+        }
     }
 
     private fun saveNewProduct() {
@@ -48,7 +59,8 @@ class ProductFormActivity : AppCompatActivity() {
         return Product(
             name = name,
             description = description,
-            price = price
+            price = price,
+            image = url
         )
     }
 }
