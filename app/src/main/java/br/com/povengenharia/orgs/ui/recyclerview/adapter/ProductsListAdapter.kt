@@ -6,39 +6,47 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import br.com.povengenharia.orgs.databinding.ProductItemBinding
 import br.com.povengenharia.orgs.extensions.TryLoadImage
+import br.com.povengenharia.orgs.extensions.formatValueAsBrazilianCurrency
 import br.com.povengenharia.orgs.model.Product
-import java.math.BigDecimal
-import java.text.NumberFormat
-import java.util.Locale
 
 class ProductsListAdapter(
     private val context: Context,
-    products: List<Product>
+    products: List<Product>,
+    var whenClickOnItem: (product: Product) -> Unit = {}
 ) : RecyclerView.Adapter<ProductsListAdapter.ViewHolder>() {
 
     private val products = products.toMutableList()
 
-    class ViewHolder(private val context: Context, private val binding: ProductItemBinding) :
+    inner class ViewHolder(private val binding: ProductItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
+        private lateinit var product: Product
+
+        init {
+            itemView.setOnClickListener {
+                if (::product.isInitialized) {
+                    whenClickOnItem(product)
+                }
+            }
+        }
+
+
         fun bind(product: Product) {
+            this.product = product
             binding.tvProductItemName.text = product.name
             binding.tvProductItemDescription.text = product.description
             val priceFormated = formatValueAsBrazilianCurrency(product.price)
             binding.tvProductItemPrice.text = priceFormated
-
             binding.ivProductItemPicture.TryLoadImage(url = product.image)
         }
 
-        private fun formatValueAsBrazilianCurrency(price: BigDecimal): String? {
-            val currencyFormat = NumberFormat.getCurrencyInstance(Locale("pt", "br"))
-            return currencyFormat.format(price)
-        }
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val inflater = LayoutInflater.from(context)
         val binding = ProductItemBinding.inflate(LayoutInflater.from(context), parent, false)
-        return ViewHolder(context, binding)
+        return ViewHolder(binding)
     }
 
     override fun getItemCount(): Int = products.size
@@ -53,5 +61,6 @@ class ProductsListAdapter(
         this.products.addAll(product)
         notifyDataSetChanged()
     }
+
 
 }

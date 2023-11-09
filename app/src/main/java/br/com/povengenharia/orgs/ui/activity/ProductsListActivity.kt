@@ -3,14 +3,10 @@ package br.com.povengenharia.orgs.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.RecyclerView
-import br.com.povengenharia.orgs.R
 import br.com.povengenharia.orgs.dao.ProductsDao
 import br.com.povengenharia.orgs.databinding.ActivityProductsListBinding
 import br.com.povengenharia.orgs.ui.recyclerview.adapter.ProductsListAdapter
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class ProductsListActivity : AppCompatActivity() {
 
@@ -22,8 +18,8 @@ class ProductsListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityProductsListBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        configuraRecyclerView()
-        configuraFab()
+        setupRecyclerView()
+        configureAddProductFab()
     }
 
     override fun onResume() {
@@ -31,22 +27,30 @@ class ProductsListActivity : AppCompatActivity() {
         adapter.update(dao.getAllProducts())
     }
 
-    private fun configuraFab() {
+    private fun configureAddProductFab() {
         val fab = binding.fabAddProduct
         fab.setOnClickListener {
-            vaiParaFormularioProduto()
+            openProductForm()
         }
     }
 
-    private fun vaiParaFormularioProduto() {
+    private fun openProductForm() {
         val intent = Intent(this, ProductFormActivity::class.java)
         startActivity(intent)
     }
 
-    private fun configuraRecyclerView() {
+    private fun setupRecyclerView() {
         val recyclerView = binding.rvProductList
-
         recyclerView.adapter = adapter
+        adapter.whenClickOnItem = {
+            val intent = Intent(
+                this,
+                ProductDetailsActivity::class.java
+            ).apply {
+                putExtra("EXTRA_PRODUCT", it)
+            }
+            startActivity(intent)
+        }
 
     }
 }
