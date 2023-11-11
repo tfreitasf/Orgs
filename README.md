@@ -1,7 +1,6 @@
 # Orgs
 Este é um aplicativo para gerenciar produtos. Com ele, é possível adicionar, editar e exibir uma lista de produtos, incluindo imagem, nome, descrição e preço. Também, é possível cadastrar produtos e visualizar a lista de produtos e uma tela de detalhe do produto.
 
-
 ## 🎥 Demonstração
 
 <p float="center">
@@ -15,26 +14,20 @@ Este é um aplicativo para gerenciar produtos. Com ele, é possível adicionar, 
   <img src="https://github.com/tfreitasf/Orgs/assets/83042767/950b06a8-6c49-4342-8d4f-068c1e181101" width="300" />
   <img src="https://github.com/tfreitasf/Orgs/assets/83042767/937bf4e5-4bb5-4fbe-ab93-fb85b8bf16dd" width="300" />
   <img src="https://github.com/tfreitasf/Orgs/assets/83042767/810df5e3-a4f2-4097-a6f0-e28d2ef8913f" width="300" />
+  <img src="https://github.com/tfreitasf/Orgs/assets/83042767/f2a4b83d-749f-4c17-864a-cd2bf2c57bdb" width="300" />
 </p>
-
-
 
 ## ✔️ Funcionalidades
 - Adicionar um novo produto
 - Exibir a lista de produtos
 - Exibir tela de detalhes do produto.
 
-## 🌟 Novas Implementações
-A versão mais recente do Orgs traz uma série de melhorias e novidades que melhoram a experiência do usuário:
+## 🌟 Novidades na versão 2.0.1
+Nesta atualização, focamos em expandir as funcionalidades do Orgs, oferecendo mais detalhes e interatividade:
 
-### Adição de Imagens
-- Agora é possível adicionar imagens aos produtos, incluindo suporte a **GIFs animados**, o que torna a visualização dos produtos mais dinâmica e atraente.
+### Tela de Detalhes do Produto
 
-### Aprimoramento de Layout com Material Design
-- O layout foi completamente revitalizado seguindo os princípios do **Material Design**. Isso inclui a utilização de `TextInputLayout` para campos de entrada e `CardView` para a exibição de produtos, proporcionando uma interface mais limpa e intuitiva.
-
-### Formatação de Valores Monetários
-- A exibição de preços foi aprimorada com uma formatação adequada para valores monetários, garantindo uma leitura fácil e compreensível dos custos associados a cada produto.
+- **Experiência Aprofundada**: Implementamos uma nova tela de detalhes, permitindo que os usuários vejam informações mais detalhadas sobre cada produto, com imagens, descrição e preço.
 
 
 ## 🚀 Futuras Implementações
