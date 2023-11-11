@@ -1,7 +1,6 @@
 # Orgs
 Este é um aplicativo para gerenciar produtos. Com ele, é possível adicionar, editar e exibir uma lista de produtos, incluindo imagem, nome, descrição e preço. Também, é possível cadastrar produtos e visualizar a lista de produtos e uma tela de detalhe do produto.
 
-
 ## 🎥 Demonstração
 
 <p float="center">
@@ -17,7 +16,6 @@ Este é um aplicativo para gerenciar produtos. Com ele, é possível adicionar, 
   <img src="https://github.com/tfreitasf/Orgs/assets/83042767/810df5e3-a4f2-4097-a6f0-e28d2ef8913f" width="300" />
   <img src="https://github.com/tfreitasf/Orgs/assets/83042767/f2a4b83d-749f-4c17-864a-cd2bf2c57bdb" width="300" />
 </p>
-
 
 ## ✔️ Funcionalidades
 - Adicionar um novo produto
