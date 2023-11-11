@@ -11,7 +11,7 @@ import br.com.povengenharia.orgs.model.Product
 
 class ProductsListAdapter(
     private val context: Context,
-    products: List<Product>,
+    products: List<Product> = emptyList(),
     var whenClickOnItem: (product: Product) -> Unit = {}
 ) : RecyclerView.Adapter<ProductsListAdapter.ViewHolder>() {
 
@@ -44,7 +44,6 @@ class ProductsListAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val inflater = LayoutInflater.from(context)
         val binding = ProductItemBinding.inflate(LayoutInflater.from(context), parent, false)
         return ViewHolder(binding)
     }

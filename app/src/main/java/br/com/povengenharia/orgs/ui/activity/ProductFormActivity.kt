@@ -1,12 +1,10 @@
 package br.com.povengenharia.orgs.ui.activity
 
 import android.os.Bundle
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import br.com.povengenharia.orgs.R
-import br.com.povengenharia.orgs.dao.ProductsDao
+import br.com.povengenharia.orgs.database.AppDatabase
 import br.com.povengenharia.orgs.databinding.ActivityProductFormBinding
-import br.com.povengenharia.orgs.databinding.FormImageBinding
 import br.com.povengenharia.orgs.extensions.TryLoadImage
 import br.com.povengenharia.orgs.model.Product
 import br.com.povengenharia.orgs.ui.dialog.ImageDialogForm
@@ -25,19 +23,21 @@ class ProductFormActivity : AppCompatActivity() {
         saveNewProduct()
 
         binding.ivProductFormImage.setOnClickListener {
-            ImageDialogForm(this).show(url){image ->
-                    url = image
-                    binding.ivProductFormImage.TryLoadImage(url)
-                }
+            ImageDialogForm(this).show(url) { image ->
+                url = image
+                binding.ivProductFormImage.TryLoadImage(url)
+            }
         }
     }
 
     private fun saveNewProduct() {
         val btnSave = binding.btnProductFormSave
-        val dao = ProductsDao()
+        val db = AppDatabase.getInstance(this)
+        val productDao = db.productDao()
+
         btnSave.setOnClickListener {
             val newProdutct = createNewProductFromForm()
-            dao.add(newProdutct)
+            productDao.add(newProdutct)
             finish()
         }
     }
