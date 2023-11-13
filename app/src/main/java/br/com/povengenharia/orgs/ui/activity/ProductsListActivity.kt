@@ -50,7 +50,7 @@ class ProductsListActivity : AppCompatActivity() {
                 this,
                 ProductDetailsActivity::class.java
             ).apply {
-                putExtra("EXTRA_PRODUCT", it)
+                putExtra(CHAVE_PRODUTO_ID, it.id)
             }
             startActivity(intent)
         }
