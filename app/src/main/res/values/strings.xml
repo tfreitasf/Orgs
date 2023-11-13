@@ -7,4 +7,7 @@
     <string name="txt_load">Carregar</string>
     <string name="txt_url">URL da imagem</string>
     <string name="txt_register_product">Cadastrar Produto</string>
+    <string name="txt_edit">Editar</string>
+    <string name="txt_delete">Deletar</string>
+    <string name="txt_alterar_produto">Alterar Produto</string>
 </resources>

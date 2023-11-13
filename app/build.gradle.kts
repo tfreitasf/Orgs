@@ -2,6 +2,8 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("kotlin-parcelize")
+    id("kotlin-kapt")
+
 }
 
 android {
@@ -51,5 +53,9 @@ dependencies {
 
     implementation("io.coil-kt:coil:2.5.0")
     implementation("io.coil-kt:coil-gif:2.5.0")
+
+    val room_version = "2.6.0"
+    implementation("androidx.room:room-runtime:$room_version")
+    kapt("androidx.room:room-compiler:$room_version")
 
 }

@@ -4,14 +4,14 @@ package br.com.povengenharia.orgs.ui.activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import br.com.povengenharia.orgs.dao.ProductsDao
+import br.com.povengenharia.orgs.database.AppDatabase
 import br.com.povengenharia.orgs.databinding.ActivityProductsListBinding
 import br.com.povengenharia.orgs.ui.recyclerview.adapter.ProductsListAdapter
 
 class ProductsListActivity : AppCompatActivity() {
 
-    val dao = ProductsDao()
-    private val adapter = ProductsListAdapter(context = this, products = dao.getAllProducts())
+
+    private val adapter = ProductsListAdapter(context = this)
     private lateinit var binding: ActivityProductsListBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,7 +24,10 @@ class ProductsListActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        adapter.update(dao.getAllProducts())
+        val db = AppDatabase.getInstance(this)
+        val productDao = db.productDao()
+        adapter.update(productDao.getAll())
+
     }
 
     private fun configureAddProductFab() {
@@ -47,7 +50,7 @@ class ProductsListActivity : AppCompatActivity() {
                 this,
                 ProductDetailsActivity::class.java
             ).apply {
-                putExtra("EXTRA_PRODUCT", it)
+                putExtra(CHAVE_PRODUTO_ID, it.id)
             }
             startActivity(intent)
         }
