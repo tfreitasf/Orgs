@@ -68,15 +68,15 @@ Este é um aplicativo para gerenciar produtos. Com ele, é possível adicionar, 
 - Melhorias na interface do usuário com menus contextuais e pop-ups.
 - Adoção do Room para persistência de dados local.
 
-- ### v2.0.1
+### v2.0.1
 - Lançamento da funcionalidade de tela de detalhes do produto.
 
-- ### v2.0.0
+### v2.0.0
 - Lançamento da funcionalidade de adicão de imagens e gif's.
 - Melhorias na interface do usuário atravez do Material Design.
 - Formatação de Valores Monetários. A exibição de preços foi aprimorada com uma formatação adequada para valores monetários.
 
-- ### v1.0.0
+### v1.0.0
 - Lançamento do aplicativo
 
 
