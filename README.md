@@ -1,4 +1,4 @@
-# Orgs V3.0.0
+# Orgs V3.0.1
 Este é um aplicativo para gerenciar produtos. Com ele, é possível adicionar, editar e exibir uma lista de produtos, incluindo imagem, nome, descrição e preço. Também, é possível cadastrar produtos e visualizar a lista de produtos e uma tela de detalhe do produto.
 
 ## 🎥 Demonstração
@@ -9,7 +9,7 @@ Este é um aplicativo para gerenciar produtos. Com ele, é possível adicionar, 
 
 
 <p float="left">  
-  <img src="https://github.com/tfreitasf/Orgs/assets/83042767/e177968e-c5eb-48b3-ba03-64e523fcacf9" width="300" />
+  <img src="https://github.com/tfreitasf/Orgs/assets/83042767/a9d78c9f-ac16-44a4-ace9-bbe52ab4ff9e" width="300" />
   <img src="https://github.com/tfreitasf/Orgs/assets/83042767/ee61504a-03bd-4643-a540-0aef0873aca7" width="300" /> 
   <img src="https://github.com/tfreitasf/Orgs/assets/83042767/950b06a8-6c49-4342-8d4f-068c1e181101" width="300" />
   <img src="https://github.com/tfreitasf/Orgs/assets/83042767/937bf4e5-4bb5-4fbe-ab93-fb85b8bf16dd" width="300" />
@@ -19,24 +19,23 @@ Este é um aplicativo para gerenciar produtos. Com ele, é possível adicionar, 
 
 
 
+
 ## ✔️ Funcionalidades
-- Adicionar um novo produto
-- Exibir a lista de produtos
-- Exibir tela de detalhes do produto.
-- Edição e Exclusão de Produtos da Lista.
+- Cadastro de novos produtos.
+- Visualização da lista de produtos.
+- Acesso a detalhes dos produtos.
+- Edição e exclusão de produtos através de cliques longos.
 
-## 🌟 Novidades na versão 3.0.0
-- **Edição de Produtos**: Agora é possível editar as informações dos produtos diretamente na tela de detalhes.
-- **Exclusão de Produtos**: Os produtos podem ser excluídos facilmente através de um menu de contexto na lista ou na tela de detalhes.
-- **Melhorias de Interface**: A interface do usuário foi aprimorada com a adição de menus contextuais e pop-ups para uma navegação mais intuitiva.
-- **Persistência de Dados com Room**: Introduzimos o Room para uma gestão de banco de dados robusta e eficiente.
-
+## 🌟 Novidades na versão 3.0.1
+- **Edição de Produtos**: Edição de produtos diretamente na tela de listagem através de clique longo.
+- **Exclusão de Produtos**: Exclusão rápida de produtos na lista com o mesmo método.
+- **Melhorias de Interface**: Implementação de PopupMenu para navegação intuitiva e gestão eficiente.
 
 ## 🚀 Futuras Implementações
 - Sincronização com a nuvem para backup
 - Recursos de compartilhamento de produtos
 - Implementação de filtros e buscas na lista de produtos
-- Melhorias no código para que as operações de banco de dados não sejam executadas na thread principal 
+- Execução de operações de banco de dados fora da thread principal para melhor performance.
 
 ## 🔨 Técnicas e tecnologias no projeto
 
@@ -55,7 +54,30 @@ Este é um aplicativo para gerenciar produtos. Com ele, é possível adicionar, 
   - `Button` :Botões interativos.
   - `AlertDialog`: Exibição de formulário para carregar novas imagens do produto
 - `Room Database`: Persistência de dados com Room para armazenar os produtos localmente.
+- `setOnLongClickListener`: Utilização de gestos para clicks longos para ativação de popupMenu que facilitam a edição e exclusão rápida de produtos.
 
+## 📝 Histórico de Versões
+
+### v3.0.1
+- Implementação de click longo para ações rápidas de edição e exclusão de produtos na lista.
+- Adição de menus contextuais para edição e exclusão no RecyclerView.
+- Refinamento da lógica de atualização da lista após operações CRUD.
+
+### v3.0.0
+- Lançamento das funcionalidades de edição e exclusão de produtos na tela de detalhes do produto.
+- Melhorias na interface do usuário com menus contextuais e pop-ups.
+- Adoção do Room para persistência de dados local.
+
+- ### v2.0.1
+- Lançamento da funcionalidade de tela de detalhes do produto.
+
+- ### v2.0.0
+- Lançamento da funcionalidade de adicão de imagens e gif's.
+- Melhorias na interface do usuário atravez do Material Design.
+- Formatação de Valores Monetários. A exibição de preços foi aprimorada com uma formatação adequada para valores monetários.
+
+- ### v1.0.0
+- Lançamento do aplicativo
 
 
 
