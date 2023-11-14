@@ -15,13 +15,12 @@ import br.com.povengenharia.orgs.model.Product
 class ProductsListAdapter(
     private val context: Context,
     products: List<Product> = emptyList(),
+    var whenClickDelete: (product: Product) -> Unit = {},
+    var whenClickEdit: (product: Product) -> Unit = {},
     var whenClickOnItem: (product: Product) -> Unit = {}
 ) : RecyclerView.Adapter<ProductsListAdapter.ViewHolder>() {
 
-    private val products = products.toMutableList()
-    var whenClickDelete: (product: Product) -> Unit = {}
-    var whenClickEdit: (product: Product) -> Unit = {}
-
+    val products = products.toMutableList()
 
     inner class ViewHolder(private val binding: ProductItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -97,6 +96,14 @@ class ProductsListAdapter(
         this.products.clear()
         this.products.addAll(product)
         notifyDataSetChanged()
+    }
+
+    fun removeProduct(product: Product) {
+        val index = products.indexOfFirst { it.id == product.id }
+        if (index >= 0) {
+            products.removeAt(index)
+            notifyItemRemoved(index)
+        }
     }
 
 

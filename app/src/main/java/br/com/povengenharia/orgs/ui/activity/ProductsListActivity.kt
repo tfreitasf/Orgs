@@ -10,9 +10,25 @@ import br.com.povengenharia.orgs.ui.recyclerview.adapter.ProductsListAdapter
 
 class ProductsListActivity : AppCompatActivity() {
 
-
-    private val adapter = ProductsListAdapter(context = this)
     private lateinit var binding: ActivityProductsListBinding
+
+    private val adapter by lazy {
+        ProductsListAdapter(this).apply {
+            whenClickDelete = { product ->
+                AppDatabase.getInstance(this@ProductsListActivity).productDao()
+                    .deleteProduct(product)
+                removeProduct(product)
+            }
+            whenClickEdit = { product ->
+                val editIntent =
+                    Intent(this@ProductsListActivity, ProductFormActivity::class.java).apply {
+                        putExtra(CHAVE_PRODUTO_ID, product.id)
+                    }
+                startActivity(editIntent)
+            }
+        }
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,11 +40,10 @@ class ProductsListActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        val db = AppDatabase.getInstance(this)
-        val productDao = db.productDao()
+        val productDao = AppDatabase.getInstance(this).productDao()
         adapter.update(productDao.getAll())
-
     }
+
 
     private fun configureAddProductFab() {
         val fab = binding.fabAddProduct
