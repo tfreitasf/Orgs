@@ -10,4 +10,12 @@
     <string name="txt_edit">Editar</string>
     <string name="txt_delete">Deletar</string>
     <string name="txt_alterar_produto">Alterar Produto</string>
+    <string name="txt_sort">Ordenar</string>
+    <string name="txt_sort_name_a_z">Nome A - Z</string>
+    <string name="txt_sort_name_z_a">Nome Z - A</string>
+    <string name="txt_sort_description_a_z">Descrição A - Z</string>
+    <string name="txt_sort_description_z_a">Descrição Z - A</string>
+    <string name="txt_price_higher_lower">Valor maior para menor</string>
+    <string name="txt_price_lower_higher">Valor menor para maior</string>
+    <string name="txt_no_ordering">Sem ordenação</string>
 </resources>
