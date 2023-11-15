@@ -1,5 +1,5 @@
-# Orgs V3.0.1
-Este é um aplicativo para gerenciar produtos. Com ele, é possível adicionar, editar e exibir uma lista de produtos, incluindo imagem, nome, descrição e preço. Também, é possível cadastrar produtos e visualizar a lista de produtos e uma tela de detalhe do produto.
+# Orgs V3.0.2
+Este é um aplicativo para gerenciar produtos. Com ele, é possível adicionar, editar e exibir uma lista de produtos, incluindo imagem, nome, descrição e preço. Além disso, é possível visualizar detalhes dos produtos e agora ordená-los de diferentes maneiras na lista.
 
 ## 🎥 Demonstração
 
@@ -24,17 +24,16 @@ Este é um aplicativo para gerenciar produtos. Com ele, é possível adicionar, 
 - Cadastro de novos produtos.
 - Visualização da lista de produtos.
 - Acesso a detalhes dos produtos.
-- Edição e exclusão de produtos através de cliques longos.
+- Edição e exclusão de produtos através de cliques longos na lista e opções na tela de detalhes.
+- Ordenação dos produtos na lista por nome, descrição ou preço.
 
-## 🌟 Novidades na versão 3.0.1
-- **Edição de Produtos**: Edição de produtos diretamente na tela de listagem através de clique longo.
-- **Exclusão de Produtos**: Exclusão rápida de produtos na lista com o mesmo método.
-- **Melhorias de Interface**: Implementação de PopupMenu para navegação intuitiva e gestão eficiente.
+## 🌟 Novidades na versão 3.0.2
+- **Ordenação de Produtos**: Implementada a funcionalidade de ordenar produtos na lista por nome, descrição e preço em ordem ascendente ou descendente.
+
 
 ## 🚀 Futuras Implementações
 - Sincronização com a nuvem para backup
 - Recursos de compartilhamento de produtos
-- Implementação de filtros e buscas na lista de produtos
 - Execução de operações de banco de dados fora da thread principal para melhor performance.
 
 ## 🔨 Técnicas e tecnologias no projeto
@@ -55,8 +54,13 @@ Este é um aplicativo para gerenciar produtos. Com ele, é possível adicionar, 
   - `AlertDialog`: Exibição de formulário para carregar novas imagens do produto
 - `Room Database`: Persistência de dados com Room para armazenar os produtos localmente.
 - `setOnLongClickListener`: Utilização de gestos para clicks longos para ativação de popupMenu que facilitam a edição e exclusão rápida de produtos.
+- `PopupMenu`: Utilização de menus contextuais para oferecer opções de ordenação de produtos na lista.
 
 ## 📝 Histórico de Versões
+
+### v3.0.2
+- Adicionada a funcionalidade de ordenação de produtos na lista com várias opções de classificação.
+- Melhorias de interface para facilitar a interação com a lista de produtos.
 
 ### v3.0.1
 - Implementação de click longo para ações rápidas de edição e exclusão de produtos na lista.
