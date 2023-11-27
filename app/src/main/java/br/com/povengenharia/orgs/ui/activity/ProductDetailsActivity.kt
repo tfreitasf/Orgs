@@ -11,6 +11,11 @@ import br.com.povengenharia.orgs.databinding.ActivityProductDetailsBinding
 import br.com.povengenharia.orgs.extensions.TryLoadImage
 import br.com.povengenharia.orgs.extensions.formatValueAsBrazilianCurrency
 import br.com.povengenharia.orgs.model.Product
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class ProductDetailsActivity : AppCompatActivity() {
 
@@ -18,6 +23,8 @@ class ProductDetailsActivity : AppCompatActivity() {
     private var productId: Long = 0L
     private var product: Product? = null
     private lateinit var binding: ActivityProductDetailsBinding
+
+    private val scope = CoroutineScope(IO)
 
 
     private val productDao by lazy {
@@ -37,10 +44,14 @@ class ProductDetailsActivity : AppCompatActivity() {
     }
 
     private fun findProduct() {
-        product = productDao.findById(productId)
-        product?.let {
-            fillField(it)
-        } ?: finish()
+        scope.launch {
+            product = productDao.findById(productId)
+            withContext(Dispatchers.Main) {
+                product?.let {
+                    fillField(it)
+                } ?: finish()
+            }
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -48,8 +59,11 @@ class ProductDetailsActivity : AppCompatActivity() {
 
         when (item.itemId) {
             R.id.menu_product_details_delete -> {
-                product?.let { productDao.deleteProduct(it) }
-                finish()
+                scope.launch {
+                    product?.let { productDao.deleteProduct(it) }
+                    finish()
+                }
+
             }
 
             R.id.menu_product_details_edit -> {

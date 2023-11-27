@@ -11,7 +11,7 @@ import br.com.povengenharia.orgs.database.AppDatabase
 import br.com.povengenharia.orgs.databinding.ActivityProductsListBinding
 import br.com.povengenharia.orgs.model.Product
 import br.com.povengenharia.orgs.ui.recyclerview.adapter.ProductsListAdapter
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -21,6 +21,8 @@ class ProductsListActivity : AppCompatActivity() {
     private val binding by lazy {
         ActivityProductsListBinding.inflate(layoutInflater)
     }
+
+    private val scope = MainScope()
 
     private val adapter by lazy {
         ProductsListAdapter(this).apply {
@@ -56,9 +58,8 @@ class ProductsListActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         val productDao = AppDatabase.getInstance(this).productDao()
-        val scope = MainScope()
         scope.launch {
-            val products = withContext(Dispatchers.IO){
+            val products = withContext(IO) {
                 productDao.getAll()
             }
             adapter.update(products)

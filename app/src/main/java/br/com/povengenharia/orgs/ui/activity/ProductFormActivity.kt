@@ -9,6 +9,11 @@ import br.com.povengenharia.orgs.databinding.ActivityProductFormBinding
 import br.com.povengenharia.orgs.extensions.TryLoadImage
 import br.com.povengenharia.orgs.model.Product
 import br.com.povengenharia.orgs.ui.dialog.ImageDialogForm
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.math.BigDecimal
 
 class ProductFormActivity : AppCompatActivity() {
@@ -21,6 +26,8 @@ class ProductFormActivity : AppCompatActivity() {
         val db = AppDatabase.getInstance(this)
         db.productDao()
     }
+
+    private val scope = CoroutineScope(IO)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,14 +57,17 @@ class ProductFormActivity : AppCompatActivity() {
     }
 
     private fun tryFindProduct() {
-        productDao.findById(productId)?.let {
-            title = getString(R.string.txt_alterar_produto)
-            fillFields(it)
+        scope.launch {
+            productDao.findById(productId)?.let {
+                withContext(Main) {
+                    title = getString(R.string.txt_alterar_produto)
+                    fillFields(it)
+                }
+            }
         }
     }
 
     private fun fillFields(product: Product) {
-
         url = product.image
         binding.ivProductFormImage.TryLoadImage(product.image)
         binding.etProductFormName.setText(product.name)
@@ -69,12 +79,14 @@ class ProductFormActivity : AppCompatActivity() {
         val btnSave = binding.btnProductFormSave
         btnSave.setOnClickListener {
             val newProdutct = createNewProductFromForm()
-            if (productId > 0) {
-                productDao.updateProduct(newProdutct)
-            } else {
-                productDao.add(newProdutct)
+            scope.launch {
+                if (productId > 0) {
+                    productDao.updateProduct(newProdutct)
+                } else {
+                    productDao.add(newProdutct)
+                }
+                finish()
             }
-            finish()
         }
     }
 
