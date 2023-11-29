@@ -2,6 +2,7 @@ package br.com.povengenharia.orgs.ui.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import br.com.povengenharia.orgs.R
 import br.com.povengenharia.orgs.database.AppDatabase
 import br.com.povengenharia.orgs.database.dao.ProductDao
@@ -9,8 +10,6 @@ import br.com.povengenharia.orgs.databinding.ActivityProductFormBinding
 import br.com.povengenharia.orgs.extensions.TryLoadImage
 import br.com.povengenharia.orgs.model.Product
 import br.com.povengenharia.orgs.ui.dialog.ImageDialogForm
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -27,7 +26,6 @@ class ProductFormActivity : AppCompatActivity() {
         db.productDao()
     }
 
-    private val scope = CoroutineScope(IO)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,7 +55,7 @@ class ProductFormActivity : AppCompatActivity() {
     }
 
     private fun tryFindProduct() {
-        scope.launch {
+        lifecycleScope.launch {
             productDao.findById(productId)?.let {
                 withContext(Main) {
                     title = getString(R.string.txt_alterar_produto)
@@ -79,7 +77,7 @@ class ProductFormActivity : AppCompatActivity() {
         val btnSave = binding.btnProductFormSave
         btnSave.setOnClickListener {
             val newProdutct = createNewProductFromForm()
-            scope.launch {
+            lifecycleScope.launch {
                 if (productId > 0) {
                     productDao.updateProduct(newProdutct)
                 } else {

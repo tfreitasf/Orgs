@@ -11,35 +11,35 @@ import br.com.povengenharia.orgs.model.Product
 interface ProductDao {
 
     @Query("SELECT * FROM Product")
-    fun getAll(): List<Product>
+    suspend fun getAll(): List<Product>
 
     @Insert
-    fun add(vararg product: Product)
+    suspend fun add(vararg product: Product)
 
     @Update
-    fun updateProduct(product: Product)
+    suspend fun updateProduct(product: Product)
 
     @Delete
-    fun deleteProduct(product: Product)
+    suspend fun deleteProduct(product: Product)
 
     @Query("SELECT * FROM Product WHERE id = :id")
-    fun findById(id: Long) : Product?
+    suspend fun findById(id: Long) : Product?
 
     @Query("SELECT * FROM product ORDER BY name COLLATE NOCASE ASC")
-    fun getAllOrderByNameAsc() :List<Product>
+    suspend fun getAllOrderByNameAsc() :List<Product>
 
     @Query("SELECT * FROM Product ORDER BY name COLLATE NOCASE DESC")
-    fun getAllOrderByNameDesc(): List<Product>
+    suspend fun getAllOrderByNameDesc(): List<Product>
 
     @Query("SELECT * FROM Product ORDER BY description COLLATE NOCASE ASC")
-    fun getAllOrderByDescriptionAsc(): List<Product>
+    suspend fun getAllOrderByDescriptionAsc(): List<Product>
 
     @Query("SELECT * FROM Product ORDER BY description COLLATE NOCASE DESC")
-    fun getAllOrderByDescriptionDesc(): List<Product>
+    suspend fun getAllOrderByDescriptionDesc(): List<Product>
 
     @Query("SELECT * FROM Product ORDER BY price DESC")
-    fun getAllOrderByPriceDesc(): List<Product>
+    suspend fun getAllOrderByPriceDesc(): List<Product>
 
     @Query("SELECT * FROM Product ORDER BY price ASC")
-    fun getAllOrderByPriceAsc(): List<Product>
+    suspend fun getAllOrderByPriceAsc(): List<Product>
 }

@@ -6,13 +6,13 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import br.com.povengenharia.orgs.R
 import br.com.povengenharia.orgs.database.AppDatabase
 import br.com.povengenharia.orgs.databinding.ActivityProductsListBinding
 import br.com.povengenharia.orgs.model.Product
 import br.com.povengenharia.orgs.ui.recyclerview.adapter.ProductsListAdapter
-import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -22,14 +22,17 @@ class ProductsListActivity : AppCompatActivity() {
         ActivityProductsListBinding.inflate(layoutInflater)
     }
 
-    private val scope = MainScope()
 
     private val adapter by lazy {
-        ProductsListAdapter(this).apply {
+        ProductsListAdapter(this, scope = lifecycleScope).apply {
             whenClickDelete = { product ->
-                AppDatabase.getInstance(this@ProductsListActivity).productDao()
-                    .deleteProduct(product)
-                removeProduct(product)
+                lifecycleScope.launch {
+                    AppDatabase.getInstance(this@ProductsListActivity).productDao()
+                        .deleteProduct(product)
+                    withContext(Dispatchers.Main) {
+                        removeProduct(product)
+                    }
+                }
             }
             whenClickEdit = { product ->
                 val editIntent =
@@ -46,7 +49,6 @@ class ProductsListActivity : AppCompatActivity() {
         db.productDao()
     }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -54,16 +56,13 @@ class ProductsListActivity : AppCompatActivity() {
         configureAddProductFab()
     }
 
-
     override fun onResume() {
         super.onResume()
-        val productDao = AppDatabase.getInstance(this).productDao()
-        scope.launch {
-            val products = withContext(IO) {
-                productDao.getAll()
-            }
+        lifecycleScope.launch {
+            val products = productDao.getAll()
             adapter.update(products)
         }
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -72,18 +71,25 @@ class ProductsListActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val productSort: List<Product>? = when (item.itemId) {
-            R.id.menu_order_name_ascending -> productDao.getAllOrderByNameAsc()
-            R.id.menu_order_name_descending -> productDao.getAllOrderByNameDesc()
-            R.id.menu_order_description_ascending -> productDao.getAllOrderByDescriptionAsc()
-            R.id.menu_order_description_descending -> productDao.getAllOrderByDescriptionDesc()
-            R.id.menu_order_price_high_to_low -> productDao.getAllOrderByPriceDesc()
-            R.id.menu_order_value_low_to_high -> productDao.getAllOrderByPriceAsc()
-            R.id.menu_order_none -> productDao.getAll()
-            else -> null
-        }
-        productSort?.let {
-            adapter.update(it)
+        lifecycleScope.launch {
+            val productSort: List<Product>? = withContext(Dispatchers.IO) {
+                when (item.itemId) {
+                    R.id.menu_order_name_ascending -> productDao.getAllOrderByNameAsc()
+                    R.id.menu_order_name_descending -> productDao.getAllOrderByNameDesc()
+                    R.id.menu_order_description_ascending -> productDao.getAllOrderByDescriptionAsc()
+                    R.id.menu_order_description_descending -> productDao.getAllOrderByDescriptionDesc()
+                    R.id.menu_order_price_high_to_low -> productDao.getAllOrderByPriceDesc()
+                    R.id.menu_order_value_low_to_high -> productDao.getAllOrderByPriceAsc()
+                    R.id.menu_order_none -> productDao.getAll()
+                    else -> null
+
+                }
+            }
+            productSort?.let {
+                adapter.update(it)
+
+            }
+
         }
         return super.onOptionsItemSelected(item)
     }
