@@ -10,7 +10,8 @@ import br.com.povengenharia.orgs.databinding.ActivityProductFormBinding
 import br.com.povengenharia.orgs.extensions.TryLoadImage
 import br.com.povengenharia.orgs.model.Product
 import br.com.povengenharia.orgs.ui.dialog.ImageDialogForm
-import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.math.BigDecimal
@@ -56,10 +57,12 @@ class ProductFormActivity : AppCompatActivity() {
 
     private fun tryFindProduct() {
         lifecycleScope.launch {
-            productDao.findById(productId)?.let {
-                withContext(Main) {
-                    title = getString(R.string.txt_alterar_produto)
-                    fillFields(it)
+            productDao.findById(productId).firstOrNull().let { product ->
+                withContext(Dispatchers.Main) {
+                    product?.let {
+                        fillFields(it)
+                        title = getString(R.string.txt_alterar_produto)
+                    }
                 }
             }
         }

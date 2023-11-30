@@ -10,7 +10,6 @@ import androidx.lifecycle.lifecycleScope
 import br.com.povengenharia.orgs.R
 import br.com.povengenharia.orgs.database.AppDatabase
 import br.com.povengenharia.orgs.databinding.ActivityProductsListBinding
-import br.com.povengenharia.orgs.model.Product
 import br.com.povengenharia.orgs.ui.recyclerview.adapter.ProductsListAdapter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -21,7 +20,6 @@ class ProductsListActivity : AppCompatActivity() {
     private val binding by lazy {
         ActivityProductsListBinding.inflate(layoutInflater)
     }
-
 
     private val adapter by lazy {
         ProductsListAdapter(this, scope = lifecycleScope).apply {
@@ -54,15 +52,11 @@ class ProductsListActivity : AppCompatActivity() {
         setContentView(binding.root)
         setupRecyclerView()
         configureAddProductFab()
-    }
-
-    override fun onResume() {
-        super.onResume()
         lifecycleScope.launch {
-            val products = productDao.getAll()
-            adapter.update(products)
+            productDao.getAll().collect { products ->
+                adapter.update(products)
+            }
         }
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -72,28 +66,36 @@ class ProductsListActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         lifecycleScope.launch {
-            val productSort: List<Product>? = withContext(Dispatchers.IO) {
-                when (item.itemId) {
-                    R.id.menu_order_name_ascending -> productDao.getAllOrderByNameAsc()
-                    R.id.menu_order_name_descending -> productDao.getAllOrderByNameDesc()
-                    R.id.menu_order_description_ascending -> productDao.getAllOrderByDescriptionAsc()
-                    R.id.menu_order_description_descending -> productDao.getAllOrderByDescriptionDesc()
-                    R.id.menu_order_price_high_to_low -> productDao.getAllOrderByPriceDesc()
-                    R.id.menu_order_value_low_to_high -> productDao.getAllOrderByPriceAsc()
-                    R.id.menu_order_none -> productDao.getAll()
-                    else -> null
 
-                }
-            }
-            productSort?.let {
-                adapter.update(it)
+            when (item.itemId) {
+                R.id.menu_order_name_ascending -> productDao.getAllOrderByNameAsc()
+                    .collect { products -> adapter.update(products) }
 
+                R.id.menu_order_name_descending -> productDao.getAllOrderByNameDesc()
+                    .collect { products -> adapter.update(products) }
+
+                R.id.menu_order_description_ascending -> productDao.getAllOrderByDescriptionAsc()
+                    .collect { products -> adapter.update(products) }
+
+                R.id.menu_order_description_descending -> productDao.getAllOrderByDescriptionDesc()
+                    .collect { products -> adapter.update(products) }
+
+                R.id.menu_order_price_high_to_low -> productDao.getAllOrderByPriceDesc()
+                    .collect { products -> adapter.update(products) }
+
+                R.id.menu_order_value_low_to_high -> productDao.getAllOrderByPriceAsc()
+                    .collect { products -> adapter.update(products) }
+
+                R.id.menu_order_none -> productDao.getAll()
+                    .collect { products -> adapter.update(products) }
+
+                else -> return@launch
             }
 
         }
+
         return super.onOptionsItemSelected(item)
     }
-
 
     private fun configureAddProductFab() {
         val fab = binding.fabAddProduct
@@ -119,6 +121,5 @@ class ProductsListActivity : AppCompatActivity() {
             }
             startActivity(intent)
         }
-
     }
 }
