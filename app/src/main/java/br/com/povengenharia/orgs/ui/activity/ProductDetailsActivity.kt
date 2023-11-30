@@ -4,21 +4,25 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import br.com.povengenharia.orgs.R
 import br.com.povengenharia.orgs.database.AppDatabase
 import br.com.povengenharia.orgs.databinding.ActivityProductDetailsBinding
 import br.com.povengenharia.orgs.extensions.TryLoadImage
 import br.com.povengenharia.orgs.extensions.formatValueAsBrazilianCurrency
 import br.com.povengenharia.orgs.model.Product
+import kotlinx.coroutines.launch
 
 class ProductDetailsActivity : AppCompatActivity() {
 
 
     private var productId: Long = 0L
     private var product: Product? = null
-    private lateinit var binding: ActivityProductDetailsBinding
-
+    private val binding by lazy {
+        ActivityProductDetailsBinding.inflate(layoutInflater)
+    }
 
     private val productDao by lazy {
         AppDatabase.getInstance(this).productDao()
@@ -26,31 +30,34 @@ class ProductDetailsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityProductDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
         tryLoadProduct()
-    }
-
-    override fun onResume() {
-        super.onResume()
         findProduct()
     }
 
     private fun findProduct() {
-        product = productDao.findById(productId)
-        product?.let {
-            fillField(it)
-        } ?: finish()
+        lifecycleScope.launch {
+            productDao.findById(productId).collect { productFound ->
+                product = productFound
+                product?.let {
+                    fillField(it)
+                } ?: finish()
+            }
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-
-
         when (item.itemId) {
             R.id.menu_product_details_delete -> {
-                product?.let { productDao.deleteProduct(it) }
-                finish()
+                lifecycleScope.launch {
+                    product?.let {
+                        productDao.deleteProduct(it)
+                    }
+                    finish()
+                }
+
             }
+
 
             R.id.menu_product_details_edit -> {
                 Intent(this, ProductFormActivity::class.java).apply {
@@ -69,6 +76,7 @@ class ProductDetailsActivity : AppCompatActivity() {
 
     private fun tryLoadProduct() {
         productId = intent.getLongExtra(CHAVE_PRODUTO_ID, 0L)
+        Toast.makeText(this, "Produto ID: $productId", Toast.LENGTH_SHORT).show()
     }
 
     private fun fillField(productLoad: Product) {

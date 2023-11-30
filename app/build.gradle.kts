@@ -57,5 +57,12 @@ dependencies {
     val room_version = "2.6.0"
     implementation("androidx.room:room-runtime:$room_version")
     kapt("androidx.room:room-compiler:$room_version")
+    implementation ("androidx.room:room-ktx:$room_version")
+
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+
+
+    val lifecycle_version = "2.4.0"
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version")
 
 }

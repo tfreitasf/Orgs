@@ -11,9 +11,11 @@ import br.com.povengenharia.orgs.databinding.ProductItemBinding
 import br.com.povengenharia.orgs.extensions.TryLoadImage
 import br.com.povengenharia.orgs.extensions.formatValueAsBrazilianCurrency
 import br.com.povengenharia.orgs.model.Product
+import kotlinx.coroutines.CoroutineScope
 
 class ProductsListAdapter(
     private val context: Context,
+    private val scope: CoroutineScope,
     products: List<Product> = emptyList(),
     var whenClickDelete: (product: Product) -> Unit = {},
     var whenClickEdit: (product: Product) -> Unit = {},

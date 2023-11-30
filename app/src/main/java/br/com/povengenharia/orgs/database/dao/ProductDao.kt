@@ -6,40 +6,41 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
 import br.com.povengenharia.orgs.model.Product
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ProductDao {
 
     @Query("SELECT * FROM Product")
-    fun getAll(): List<Product>
+    fun getAll(): Flow<List<Product>>
 
     @Insert
-    fun add(vararg product: Product)
+    suspend fun add(vararg product: Product)
 
     @Update
-    fun updateProduct(product: Product)
+    suspend fun updateProduct(product: Product)
 
     @Delete
-    fun deleteProduct(product: Product)
+    suspend fun deleteProduct(product: Product)
 
     @Query("SELECT * FROM Product WHERE id = :id")
-    fun findById(id: Long) : Product?
+    fun findById(id: Long): Flow<Product?>
 
     @Query("SELECT * FROM product ORDER BY name COLLATE NOCASE ASC")
-    fun getAllOrderByNameAsc() :List<Product>
+    fun getAllOrderByNameAsc(): Flow<List<Product>>
 
     @Query("SELECT * FROM Product ORDER BY name COLLATE NOCASE DESC")
-    fun getAllOrderByNameDesc(): List<Product>
+    fun getAllOrderByNameDesc(): Flow<List<Product>>
 
     @Query("SELECT * FROM Product ORDER BY description COLLATE NOCASE ASC")
-    fun getAllOrderByDescriptionAsc(): List<Product>
+    fun getAllOrderByDescriptionAsc(): Flow<List<Product>>
 
     @Query("SELECT * FROM Product ORDER BY description COLLATE NOCASE DESC")
-    fun getAllOrderByDescriptionDesc(): List<Product>
+    fun getAllOrderByDescriptionDesc(): Flow<List<Product>>
 
     @Query("SELECT * FROM Product ORDER BY price DESC")
-    fun getAllOrderByPriceDesc(): List<Product>
+    fun getAllOrderByPriceDesc(): Flow<List<Product>>
 
     @Query("SELECT * FROM Product ORDER BY price ASC")
-    fun getAllOrderByPriceAsc(): List<Product>
+    fun getAllOrderByPriceAsc(): Flow<List<Product>>
 }
