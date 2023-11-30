@@ -1,5 +1,5 @@
-# Orgs V3.0.2
-Este é um aplicativo para gerenciar produtos. Com ele, é possível adicionar, editar e exibir uma lista de produtos, incluindo imagem, nome, descrição e preço. Além disso, é possível visualizar detalhes dos produtos e agora ordená-los de diferentes maneiras na lista.
+# Orgs V3.1.0
+Este é um aplicativo para gerenciar produtos. Com ele, é possível adicionar, editar e exibir uma lista de produtos, incluindo imagem, nome, descrição e preço. Além disso, é possível visualizar detalhes dos produtos,ordená-los de diferentes maneiras na lista e realizar operações de banco de dados de forma assíncrona para uma melhor performance.
 
 ## 🎥 Demonstração
 
@@ -26,15 +26,17 @@ Este é um aplicativo para gerenciar produtos. Com ele, é possível adicionar, 
 - Acesso a detalhes dos produtos.
 - Edição e exclusão de produtos através de cliques longos na lista e opções na tela de detalhes.
 - Ordenação dos produtos na lista por nome, descrição ou preço.
+- Execução de operações de banco de dados fora da thread principal.
 
-## 🌟 Novidades na versão 3.0.2
-- **Ordenação de Produtos**: Implementada a funcionalidade de ordenar produtos na lista por nome, descrição e preço em ordem ascendente ou descendente.
+## 🌟 Novidades na versão 3.1.0
+
+- **Refatoração para Uso de Coroutines e Flow**: Implementada a utilização de Coroutines e Flow para otimizar as operações de banco de dados e garantir que sejam realizadas de forma assíncrona.
 
 
 ## 🚀 Futuras Implementações
 - Sincronização com a nuvem para backup
 - Recursos de compartilhamento de produtos
-- Execução de operações de banco de dados fora da thread principal para melhor performance.
+- Implementação de autenticação de usuários e controle de acesso.
 
 ## 🔨 Técnicas e tecnologias no projeto
 
@@ -44,7 +46,7 @@ Este é um aplicativo para gerenciar produtos. Com ele, é possível adicionar, 
 - `Fontes personalizadas`: configuração para adicionar novas fontes
 - `Extension functions`: adicionar comportamentos em outras classes para reutilizá-los como funções de extensão para carregar imagens e formatar valores em moeda.
 - `Personalização de tema`: modificação de cores para o tema do App
-- Layout para Activities
+- `Layout para Activities`
   - `ContraintLayout` : ViewGroup padrão para implementar todos os layouts
   - `ImageView`: View para apresentar imagens no App
   - `Material Design Components`: Incluindo TextInputLayout para uma experiência de usuário melhorada e interfaces mais intuitivas.
@@ -53,10 +55,14 @@ Este é um aplicativo para gerenciar produtos. Com ele, é possível adicionar, 
   - `Button` :Botões interativos.
   - `AlertDialog`: Exibição de formulário para carregar novas imagens do produto
 - `Room Database`: Persistência de dados com Room para armazenar os produtos localmente.
+- `Flow`: Para lidar com sequências assíncronas de dados.
 - `setOnLongClickListener`: Utilização de gestos para clicks longos para ativação de popupMenu que facilitam a edição e exclusão rápida de produtos.
 - `PopupMenu`: Utilização de menus contextuais para oferecer opções de ordenação de produtos na lista.
 
 ## 📝 Histórico de Versões
+
+### v3.1.0
+- Implementação de Coroutines e Flow.
 
 ### v3.0.2
 - Adicionada a funcionalidade de ordenação de produtos na lista com várias opções de classificação.
@@ -86,5 +92,5 @@ Este é um aplicativo para gerenciar produtos. Com ele, é possível adicionar, 
 
 
 ## 📚 Curso e Instrução
-Este projeto faz parte do curso "Android com Kotlin: personalize o seu app" ministrado pelo professor Alex Felipe e oferecido pela empresa Alura.
+Este projeto faz parte da Formação "Desenvolva seu primeiro app Android com Kotlin" ministrado pelo professor Alex Felipe e oferecido pela empresa Alura.
 
