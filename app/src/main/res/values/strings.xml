@@ -18,4 +18,13 @@
     <string name="txt_price_higher_lower">Valor maior para menor</string>
     <string name="txt_price_lower_higher">Valor menor para maior</string>
     <string name="txt_no_ordering">Sem ordenação</string>
+    <string name="txt_login_activity_title">ORGS</string>
+    <string name="txt_activity_login_user">Usuário</string>
+    <string name="txt_activity_login_password">Senha</string>
+    <string name="txt_activity_login_login">Entrar</string>
+    <string name="txt_activity_login_register_user">Cadastrar Usuário</string>
+    <string name="txt_activity_register_user_form_user">Usuário</string>
+    <string name="txt_activity_register_user_form_name">Nome</string>
+    <string name="txt_activity_register_user_form_password">Senha</string>
+    <string name="txt_activity_register_user_form_register">Cadastrar</string>
 </resources>

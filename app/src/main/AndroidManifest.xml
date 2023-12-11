@@ -15,11 +15,19 @@
         android:theme="@style/Theme.Orgs"
         tools:targetApi="31">
         <activity
-            android:name=".ui.activity.ProductDetailsActivity"
+            android:name=".ui.activity.RegisterUserFormActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activity.ProductFormActivity"
-            android:exported="true"></activity>
+            android:name=".ui.activity.LoginActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".ui.activity.ProductDetailsActivity" />
+        <activity android:name=".ui.activity.ProductFormActivity" />
         <activity
             android:name=".ui.activity.ProductsListActivity"
             android:exported="true">
