@@ -71,6 +71,8 @@ dependencies {
     val lifecycle_version = "2.4.0"
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version")
 
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
+
 
 
 }

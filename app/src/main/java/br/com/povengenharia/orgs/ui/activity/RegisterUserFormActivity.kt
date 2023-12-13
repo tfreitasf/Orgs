@@ -49,7 +49,7 @@ class RegisterUserFormActivity : AppCompatActivity() {
     }
 
     private fun registerUser(): User {
-        val user = binding.etActivityRegisterUserFormName.text.toString()
+        val user = binding.etActivityRegisterUserFormUser.text.toString()
         val name = binding.etActivityRegisterUserFormName.text.toString()
         val password = binding.etActivityRegisterUserFormPassword.text.toString()
         return User(user, name, password)

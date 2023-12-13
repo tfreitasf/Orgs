@@ -3,6 +3,7 @@ package br.com.povengenharia.orgs.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
@@ -10,6 +11,8 @@ import androidx.lifecycle.lifecycleScope
 import br.com.povengenharia.orgs.R
 import br.com.povengenharia.orgs.database.AppDatabase
 import br.com.povengenharia.orgs.databinding.ActivityProductsListBinding
+import br.com.povengenharia.orgs.preferences.dataStore
+import br.com.povengenharia.orgs.preferences.loggedUserIdPreferences
 import br.com.povengenharia.orgs.ui.recyclerview.adapter.ProductsListAdapter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -47,14 +50,27 @@ class ProductsListActivity : AppCompatActivity() {
         db.productDao()
     }
 
+    private val userDao by lazy {
+        AppDatabase.getInstance(this).userDao()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         setupRecyclerView()
         configureAddProductFab()
         lifecycleScope.launch {
-            productDao.getAll().collect { products ->
-                adapter.update(products)
+            launch {
+                productDao.getAll().collect { products ->
+                    adapter.update(products)
+                }
+            }
+            dataStore.data.collect { preferences ->
+                preferences[loggedUserIdPreferences]?.let { userId ->
+                    userDao.fetchForId(userId).collect() {
+                        Log.i("ListaProdutos", "onCreate: $it ")
+                    }
+                }
             }
         }
     }
