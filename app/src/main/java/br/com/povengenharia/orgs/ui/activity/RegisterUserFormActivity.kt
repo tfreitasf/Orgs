@@ -2,11 +2,12 @@ package br.com.povengenharia.orgs.ui.activity
 
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import br.com.povengenharia.orgs.R
 import br.com.povengenharia.orgs.database.AppDatabase
 import br.com.povengenharia.orgs.databinding.ActivityRegisterUserFormBinding
+import br.com.povengenharia.orgs.extensions.toast
 import br.com.povengenharia.orgs.model.User
 import kotlinx.coroutines.launch
 
@@ -24,26 +25,23 @@ class RegisterUserFormActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         setupBtnRegister()
-
-
     }
 
     private fun setupBtnRegister() {
         binding.btnActivityRegisterUserFormRegister.setOnClickListener {
             val newUser = registerUser()
-            Log.i("RegisterUser", "onCreate: $newUser")
-            lifecycleScope.launch {
-                try {
-                    userDao.insert(newUser)
-                    finish()
-                } catch (e: Exception) {
-                    Log.e("CadastroUsuario", "configuraBotaoCadastrar: ", e)
-                    Toast.makeText(
-                        this@RegisterUserFormActivity,
-                        "Falha ao cadastrar usuário",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
+            registerUser(newUser)
+        }
+    }
+
+    private fun registerUser(newUser: User) {
+        lifecycleScope.launch {
+            try {
+                userDao.insert(newUser)
+                finish()
+            } catch (e: Exception) {
+                Log.e("CadastroUsuario", "configuraBotaoCadastrar: ", e)
+                toast(getString(R.string.txt_toast_failed_register_user))
             }
         }
     }

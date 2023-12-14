@@ -27,4 +27,7 @@
     <string name="txt_activity_register_user_form_name">Nome</string>
     <string name="txt_activity_register_user_form_password">Senha</string>
     <string name="txt_activity_register_user_form_register">Cadastrar</string>
+    <string name="txt_menu_product_list_logout">Sair</string>
+    <string name="txt_toast_authentication_failure">Falha na autenticação</string>
+    <string name="txt_toast_failed_register_user">Falha ao cadastrar usuário</string>
 </resources>

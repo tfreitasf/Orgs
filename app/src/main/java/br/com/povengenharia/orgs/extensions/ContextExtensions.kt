@@ -2,6 +2,7 @@ package br.com.povengenharia.orgs.extensions
 
 import android.content.Context
 import android.content.Intent
+import android.widget.Toast
 
 fun Context.goTo(
     clazz: Class<*>,
@@ -13,5 +14,10 @@ fun Context.goTo(
         intent()
         startActivity(this)
     }
+}
+
+fun Context.toast(message: String){
+    Toast.makeText(this, message, Toast.LENGTH_SHORT)
+        .show()
 }
 
