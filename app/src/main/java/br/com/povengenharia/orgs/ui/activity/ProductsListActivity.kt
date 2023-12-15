@@ -5,22 +5,19 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import androidx.appcompat.app.AppCompatActivity
-import androidx.datastore.preferences.core.edit
 import androidx.lifecycle.lifecycleScope
 import br.com.povengenharia.orgs.R
 import br.com.povengenharia.orgs.database.AppDatabase
 import br.com.povengenharia.orgs.databinding.ActivityProductsListBinding
 import br.com.povengenharia.orgs.extensions.goTo
-import br.com.povengenharia.orgs.preferences.dataStore
-import br.com.povengenharia.orgs.preferences.loggedUserIdPreferences
+import br.com.povengenharia.orgs.ui.activity.userproducts.UserProductListManager
 import br.com.povengenharia.orgs.ui.recyclerview.adapter.ProductsListAdapter
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class ProductsListActivity : AppCompatActivity() {
+class ProductsListActivity : UserProductListManager() {
 
     private val binding by lazy {
         ActivityProductsListBinding.inflate(layoutInflater)
@@ -52,9 +49,6 @@ class ProductsListActivity : AppCompatActivity() {
         db.productDao()
     }
 
-    private val userDao by lazy {
-        AppDatabase.getInstance(this).userDao()
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,38 +57,20 @@ class ProductsListActivity : AppCompatActivity() {
         configureAddProductFab()
         lifecycleScope.launch {
             launch {
-                checkLoggedUser()
+                user
+                    .filterNotNull()
+                    .collect {
+                        searchUserProducts()
+                    }
             }
         }
     }
 
-    private suspend fun checkLoggedUser() {
-        dataStore.data.collect { preferences ->
-            preferences[loggedUserIdPreferences]?.let { userId ->
-                fetchUser(userId)
-            } ?: goToLogin()
-        }
-    }
-
-    private fun fetchUser(userId: String) {
-        lifecycleScope.launch {
-            userDao.fetchForId(userId).firstOrNull()?.let {
-                launch {
-                    searchUserProducts()
-                }
-            }
-        }
-    }
 
     private suspend fun searchUserProducts() {
         productDao.getAll().collect { products ->
             adapter.update(products)
         }
-    }
-
-    private fun goToLogin() {
-        goTo(LoginActivity::class.java)
-        finish()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -106,6 +82,10 @@ class ProductsListActivity : AppCompatActivity() {
         lifecycleScope.launch {
 
             when (item.itemId) {
+                R.id.menu_produtct_list_account ->{
+                    goTo(UserProfileActivity::class.java)
+                }
+
                 R.id.menu_product_list_logout -> {
                     logoutUser()
                 }
@@ -136,11 +116,6 @@ class ProductsListActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    private suspend fun logoutUser() {
-        dataStore.edit { prefereces ->
-            prefereces.remove(loggedUserIdPreferences)
-        }
-    }
 
     private fun configureAddProductFab() {
         val fab = binding.fabAddProduct

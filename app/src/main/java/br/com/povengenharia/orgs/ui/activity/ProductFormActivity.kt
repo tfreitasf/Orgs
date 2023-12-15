@@ -1,7 +1,7 @@
 package br.com.povengenharia.orgs.ui.activity
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import android.util.Log
 import androidx.lifecycle.lifecycleScope
 import br.com.povengenharia.orgs.R
 import br.com.povengenharia.orgs.database.AppDatabase
@@ -9,15 +9,20 @@ import br.com.povengenharia.orgs.database.dao.ProductDao
 import br.com.povengenharia.orgs.databinding.ActivityProductFormBinding
 import br.com.povengenharia.orgs.extensions.TryLoadImage
 import br.com.povengenharia.orgs.model.Product
+import br.com.povengenharia.orgs.ui.activity.userproducts.UserProductListManager
 import br.com.povengenharia.orgs.ui.dialog.ImageDialogForm
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.math.BigDecimal
 
-class ProductFormActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityProductFormBinding
+class ProductFormActivity : UserProductListManager() {
+
+    private val binding by lazy {
+        ActivityProductFormBinding.inflate(layoutInflater)
+    }
 
     private var url: String? = null
     private var productId = 0L
@@ -28,9 +33,10 @@ class ProductFormActivity : AppCompatActivity() {
     }
 
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityProductFormBinding.inflate(layoutInflater)
         setContentView(binding.root)
         title = getString(R.string.txt_register_product)
 
@@ -44,6 +50,14 @@ class ProductFormActivity : AppCompatActivity() {
                 }
         }
         tryLoadProduct()
+        lifecycleScope.launch{
+            user
+                .filterNotNull()
+                .collect(){
+                    Log.i("ProductForm", "onCreate: $it")
+
+            }
+        }
     }
 
     private fun tryLoadProduct() {
