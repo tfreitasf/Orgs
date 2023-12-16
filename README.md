@@ -1,4 +1,4 @@
-# Orgs V3.1.0
+# Orgs V4.0.0
 Este é um aplicativo para gerenciar produtos. Com ele, é possível adicionar, editar e exibir uma lista de produtos, incluindo imagem, nome, descrição e preço. Além disso, é possível visualizar detalhes dos produtos,ordená-los de diferentes maneiras na lista e realizar operações de banco de dados de forma assíncrona para uma melhor performance.
 
 ## 🎥 Demonstração
@@ -21,16 +21,25 @@ Este é um aplicativo para gerenciar produtos. Com ele, é possível adicionar, 
 
 
 ## ✔️ Funcionalidades
-- Cadastro de novos produtos.
-- Visualização da lista de produtos.
-- Acesso a detalhes dos produtos.
-- Edição e exclusão de produtos através de cliques longos na lista e opções na tela de detalhes.
-- Ordenação dos produtos na lista por nome, descrição ou preço.
-- Execução de operações de banco de dados fora da thread principal.
 
-## 🌟 Novidades na versão 3.1.0
+- **Autenticação de Usuários**: Cadastro e login de usuários para acesso personalizado.
+- **Lista Personalizada de Produtos**: Cada usuário visualiza e gerencia apenas seus próprios produtos cadastrados.
+- **Cadastro de Produtos**: Adição de novos produtos com imagem, nome, descrição e preço.
+- **Detalhes do Produto**: Visualização completa dos detalhes de cada produto cadastrado.
+- **Edição e Exclusão de Produtos**: Funcionalidades acessíveis via cliques longos na lista ou através da tela de detalhes do produto.
+- **Ordenação de Produtos**: Organização da lista de produtos por nome, descrição ou preço.
+- **Operações Assíncronas de Banco de Dados**: Execução de todas as operações de banco de dados de maneira assíncrona para melhor performance e experiência do usuário.
+- **Logout**: Opção para que o usuário possa encerrar sua sessão no aplicativo.
+- **Tela de Perfil do Usuário**: Exibição de informações do usuário e opção para logout.
 
-- **Refatoração para Uso de Coroutines e Flow**: Implementada a utilização de Coroutines e Flow para otimizar as operações de banco de dados e garantir que sejam realizadas de forma assíncrona.
+
+## 🌟 Novidades na versão 4.0.0
+
+- **Autenticação de Usuários**: Implementação de telas de login e registro, permitindo que cada usuário tenha sua própria lista de produtos.
+- **Gerenciamento de Sessão do Usuário**: Adição de lógica para gerenciar sessões de usuários logados, utilizando Kotlin DataStore.
+- **Controle de Acesso**: Produtos agora são associados a usuários específicos, permitindo que cada um gerencie sua própria lista.
+- **Logout**: Funcionalidade de logout implementada, permitindo que os usuários encerrem suas sessões.
+- **Tela de Detalhes do Usuário**: Nova tela que exibe informações do usuário e oferece a opção de logout.
 
 
 ## 🚀 Futuras Implementações
@@ -60,6 +69,10 @@ Este é um aplicativo para gerenciar produtos. Com ele, é possível adicionar, 
 - `PopupMenu`: Utilização de menus contextuais para oferecer opções de ordenação de produtos na lista.
 
 ## 📝 Histórico de Versões
+
+### v4.0.0
+- Lançamento das funcionalidades de autenticação e controle de produtos por usuário.
+
 
 ### v3.1.0
 - Implementação de Coroutines e Flow.
