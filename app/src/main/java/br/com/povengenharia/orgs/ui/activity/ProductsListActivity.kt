@@ -49,23 +49,26 @@ class ProductsListActivity : UserProductListManager() {
         db.productDao()
     }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         setupRecyclerView()
+
         configureAddProductFab()
         lifecycleScope.launch {
             launch {
                 user
                     .filterNotNull()
                     .collect {user ->
+                        setTitle(user.name)
                         searchUserProducts(user.id)
                     }
             }
         }
     }
-
+    private fun setTitle(userName: String) {
+        title = userName
+    }
 
     private suspend fun searchUserProducts(userId: String) {
         productDao.fetchAllForUser(userId).collect { products ->
@@ -80,50 +83,48 @@ class ProductsListActivity : UserProductListManager() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         lifecycleScope.launch {
-
-            when (item.itemId) {
-                R.id.menu_produtct_list_account ->{
-                    goTo(UserProfileActivity::class.java)
-                }
-
-                R.id.menu_product_list_logout -> {
-                    logoutUser()
-                }
-
-                R.id.menu_show_all_products ->{
-                    goTo(AllProductsActivity::class.java)
-                }
-
-                R.id.menu_order_name_ascending -> productDao.getAllOrderByNameAsc()
-                    .collect { products -> adapter.update(products) }
-
-                R.id.menu_order_name_descending -> productDao.getAllOrderByNameDesc()
-                    .collect { products -> adapter.update(products) }
-
-                R.id.menu_order_description_ascending -> productDao.getAllOrderByDescriptionAsc()
-                    .collect { products -> adapter.update(products) }
-
-                R.id.menu_order_description_descending -> productDao.getAllOrderByDescriptionDesc()
-                    .collect { products -> adapter.update(products) }
-
-                R.id.menu_order_price_high_to_low -> productDao.getAllOrderByPriceDesc()
-                    .collect { products -> adapter.update(products) }
-
-                R.id.menu_order_value_low_to_high -> productDao.getAllOrderByPriceAsc()
-                    .collect { products -> adapter.update(products) }
-
-                R.id.menu_order_none -> {
-                    user.value?.let { loggedUser ->
-                        searchUserProducts(loggedUser.id)
+            user.value?.id?.let {userId ->
+                when (item.itemId) {
+                    R.id.menu_produtct_list_account ->{
+                        goTo(UserProfileActivity::class.java)
                     }
-                }
 
-                else -> return@launch
+                    R.id.menu_product_list_logout -> {
+                        logoutUser()
+                    }
+
+                    R.id.menu_show_all_products ->{
+                        goTo(AllProductsActivity::class.java)
+                    }
+
+                    R.id.menu_order_name_ascending -> productDao.getAllOrderByNameAsc(userId)
+                        .collect { products -> adapter.update(products) }
+
+                    R.id.menu_order_name_descending -> productDao.getAllOrderByNameDesc(userId)
+                        .collect { products -> adapter.update(products) }
+
+                    R.id.menu_order_description_ascending -> productDao.getAllOrderByDescriptionAsc(userId)
+                        .collect { products -> adapter.update(products) }
+
+                    R.id.menu_order_description_descending -> productDao.getAllOrderByDescriptionDesc(userId)
+                        .collect { products -> adapter.update(products) }
+
+                    R.id.menu_order_price_high_to_low -> productDao.getAllOrderByPriceDesc(userId)
+                        .collect { products -> adapter.update(products) }
+
+                    R.id.menu_order_value_low_to_high -> productDao.getAllOrderByPriceAsc(userId)
+                        .collect { products -> adapter.update(products) }
+
+                    R.id.menu_order_none -> {
+                        user.value?.let { loggedUser ->
+                            searchUserProducts(loggedUser.id)
+                        }
+                    } else -> return@launch
+                }
             }
         }
         return super.onOptionsItemSelected(item)
     }
-
 
     private fun configureAddProductFab() {
         val fab = binding.fabAddProduct

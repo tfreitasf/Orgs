@@ -22,6 +22,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+            android:id="@+id/autoComplete_activity_product_form"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:visibility="gone"
+            android:hint="@string/txt_autocomplete_hint_activity_product_form"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_product_form_image"
+            tools:text="usuarioId"
+            tools:visibility="visible" />
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_product_form_name"
             style="?attr/textInputOutlinedStyle"
@@ -30,7 +43,7 @@
             android:layout_margin="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/iv_product_form_image">
+            app:layout_constraintTop_toBottomOf="@id/autoComplete_activity_product_form">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_product_form_name"

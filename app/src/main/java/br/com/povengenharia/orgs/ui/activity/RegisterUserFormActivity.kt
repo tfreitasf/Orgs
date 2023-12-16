@@ -25,6 +25,7 @@ class RegisterUserFormActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         setupBtnRegister()
+        title = getString(R.string.txt_title_register_user_form_activity)
     }
 
     private fun setupBtnRegister() {
@@ -52,5 +53,4 @@ class RegisterUserFormActivity : AppCompatActivity() {
         val password = binding.etActivityRegisterUserFormPassword.text.toString()
         return User(user, name, password)
     }
-
 }

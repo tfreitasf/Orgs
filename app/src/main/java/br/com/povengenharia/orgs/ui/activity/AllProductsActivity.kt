@@ -24,7 +24,6 @@ class AllProductsActivity : AppCompatActivity() {
                     putExtra(CHAVE_PRODUTO_ID, product.id)
                 }
                 startActivity(intent)
-
             }
         }
     }
@@ -32,6 +31,10 @@ class AllProductsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+    }
+
+    override fun onResume() {
+        super.onResume()
         setupRecyclerView()
         loadAllProducts()
     }
@@ -45,7 +48,6 @@ class AllProductsActivity : AppCompatActivity() {
     private fun loadAllProducts() {
         val db = AppDatabase.getInstance(this)
         lifecycleScope.launch {
-
 
             val products = db.productDao().getAll().firstOrNull() ?: emptyList()
             val users = db.userDao().fetchAllUser().firstOrNull() ?: emptyList()

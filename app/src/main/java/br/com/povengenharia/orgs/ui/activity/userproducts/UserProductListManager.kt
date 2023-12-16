@@ -18,7 +18,7 @@ import kotlinx.coroutines.launch
 
 abstract class UserProductListManager : AppCompatActivity() {
 
-    private val userDao by lazy {
+    protected val userDao by lazy {
         AppDatabase.getInstance(this).userDao()
     }
 

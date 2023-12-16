@@ -1,6 +1,8 @@
 package br.com.povengenharia.orgs.ui.activity
 
 import android.os.Bundle
+import android.view.View
+import android.widget.ArrayAdapter
 import androidx.lifecycle.lifecycleScope
 import br.com.povengenharia.orgs.R
 import br.com.povengenharia.orgs.database.AppDatabase
@@ -30,14 +32,22 @@ class ProductFormActivity : UserProductListManager() {
         db.productDao()
     }
 
+    private val userNameToIdMap = mutableMapOf<String, String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         title = getString(R.string.txt_register_product)
+    }
 
-        saveNewProduct()
+    override fun onResume() {
+        super.onResume()
+        setupSaveButton()
+        setupImageView()
+        tryLoadProduct()
+    }
 
+    private fun setupImageView() {
         binding.ivProductFormImage.setOnClickListener {
             ImageDialogForm(this)
                 .show(url) { image ->
@@ -45,26 +55,34 @@ class ProductFormActivity : UserProductListManager() {
                     binding.ivProductFormImage.TryLoadImage(url)
                 }
         }
-        tryLoadProduct()
-
     }
 
     private fun tryLoadProduct() {
         productId = intent.getLongExtra(CHAVE_PRODUTO_ID, 0L)
+        if (productId > 0) {
+            loadProduct()
+        }
     }
 
-    override fun onResume() {
-        super.onResume()
-        tryFindProduct()
+    private fun validExistingUser (): Boolean{
+        val selectedUsername = binding.autoCompleteActivityProductForm.text.toString()
+        if (!userNameToIdMap.containsKey(selectedUsername)){
+            binding.autoCompleteActivityProductForm.error = "Usuário não encontrado!"
+            return false
+        }
+        return true
     }
 
-    private fun tryFindProduct() {
+    private fun loadProduct() {
         lifecycleScope.launch {
-            productDao.findById(productId).firstOrNull().let { product ->
+            productDao.findById(productId).firstOrNull()?.let { product ->
                 withContext(Dispatchers.Main) {
-                    product?.let {
-                        fillFields(it)
-                        title = getString(R.string.txt_alterar_produto)
+                    fillFields(product)
+                    title = getString(R.string.txt_alterar_produto)
+                    if (product.savedWithoutUser()) {
+                        setupAutocompleteForNewProduct()
+                    } else {
+                        binding.autoCompleteActivityProductForm.visibility = View.GONE
                     }
                 }
             }
@@ -72,46 +90,42 @@ class ProductFormActivity : UserProductListManager() {
     }
 
     private fun fillFields(product: Product) {
-        url = product.image
-        binding.ivProductFormImage.TryLoadImage(product.image)
-        binding.etProductFormName.setText(product.name)
-        binding.etProductFormDescription.setText(product.description)
-        binding.etProductFormPrice.setText(product.price.toPlainString())
+        with(binding) {
+            url = product.image
+            ivProductFormImage.TryLoadImage(product.image)
+            etProductFormName.setText(product.name)
+            etProductFormDescription.setText(product.description)
+            etProductFormPrice.setText(product.price.toPlainString())
+        }
     }
 
-    private fun saveNewProduct() {
-        val btnSave = binding.btnProductFormSave
-        btnSave.setOnClickListener {
-
+    private fun setupSaveButton() {
+        binding.btnProductFormSave.setOnClickListener {
             lifecycleScope.launch {
-                user.value?.let {user ->
-                    val newProduct = createNewProductFromForm(user.id)
-                    if (productId > 0) {
-                        productDao.updateProduct(newProduct)
-                    } else {
-                        productDao.add(newProduct)
-                    }
-                    finish()
-                }
-
+                saveProduct()
             }
         }
     }
 
-    private fun createNewProductFromForm(userId: String): Product {
-        val nameField = binding.etProductFormName
-        val descriptionField = binding.etProductFormDescription
-        val priceField = binding.etProductFormPrice
-
-        val name = nameField.text.toString()
-        val description = descriptionField.text.toString()
-        val priceInText = priceField.text.toString()
-        val price = if (priceInText.isBlank()) {
-            BigDecimal.ZERO
-        } else {
-            BigDecimal(priceInText)
+    private suspend fun saveProduct() {
+        if (binding.autoCompleteActivityProductForm.visibility == View.VISIBLE && !validExistingUser()) {
+            return
         }
+        val newProduct = createProductFromForm()
+        if (productId > 0) {
+            productDao.updateProduct(newProduct)
+        } else {
+            productDao.add(newProduct)
+        }
+        finish()
+    }
 
+    private fun createProductFromForm(): Product {
+        val name = binding.etProductFormName.text.toString()
+        val description = binding.etProductFormDescription.text.toString()
+        val price = binding.etProductFormPrice.text.toString().toBigDecimalOrNull() ?: BigDecimal.ZERO
+        val selectedUserName = binding.autoCompleteActivityProductForm.text.toString()
+        val userId = userNameToIdMap[selectedUserName]
 
         return Product(
             id = productId,
@@ -119,7 +133,25 @@ class ProductFormActivity : UserProductListManager() {
             description = description,
             price = price,
             image = url,
-            userId = userId
+            userId = userId ?: user.value?.id
         )
+    }
+
+    private fun setupAutocompleteForNewProduct() {
+        lifecycleScope.launch {
+            userDao.fetchAllUser().firstOrNull()?.let { users ->
+
+                users.forEach { user ->
+                    userNameToIdMap[user.name] = user.id
+                }
+                val adapter = ArrayAdapter(this@ProductFormActivity, android.R.layout.simple_dropdown_item_1line, users.map { it.name })
+                withContext(Dispatchers.Main) {
+                    binding.autoCompleteActivityProductForm.apply {
+                        setAdapter(adapter)
+                        visibility = if (users.isNotEmpty()) View.VISIBLE else View.GONE
+                    }
+                }
+            }
+        }
     }
 }

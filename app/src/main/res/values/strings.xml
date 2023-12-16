@@ -33,4 +33,6 @@
     <string name="txt_menu_product_list_user_profile">Perfil do Usuário</string>
     <string name="txt_btn_activity_user_profile_logout">SAIR DO APP</string>
     <string name="txt_menu_all_products">Todos os Produtos</string>
+    <string name="txt_autocomplete_hint_activity_product_form">Digite o nome do Usuário</string>
+    <string name="txt_title_register_user_form_activity">Cadastrar Usuário</string>
 </resources>
