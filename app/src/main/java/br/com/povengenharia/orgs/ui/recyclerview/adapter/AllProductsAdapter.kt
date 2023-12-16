@@ -11,12 +11,14 @@ import br.com.povengenharia.orgs.databinding.ProductItemBinding
 import br.com.povengenharia.orgs.extensions.TryLoadImage
 import br.com.povengenharia.orgs.model.AllProductsItem
 import br.com.povengenharia.orgs.extensions.formatValueAsBrazilianCurrency
+import br.com.povengenharia.orgs.model.Product
 
 class AllProductsAdapter(
     private val context: Context
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var items: List<AllProductsItem> = emptyList()
+    var whenClickOnItem: (product: Product) -> Unit = {}
 
     companion object {
         private const val TYPE_USER_TITLE = 0
@@ -40,9 +42,10 @@ class AllProductsAdapter(
             TYPE_USER_TITLE -> UserTitleViewHolder(
                 LayoutInflater.from(context).inflate(R.layout.item_all_products, parent, false)
             )
-            TYPE_PRODUCT -> ProductViewHolder(
-                LayoutInflater.from(context).inflate(R.layout.product_item, parent, false)
-            )
+            TYPE_PRODUCT -> {
+                val view = LayoutInflater.from(context).inflate(R.layout.product_item, parent, false)
+                ProductViewHolder(view, whenClickOnItem)
+            }
             else -> throw IllegalArgumentException("Invalid view type")
         }
     }
@@ -64,7 +67,8 @@ class AllProductsAdapter(
         }
     }
 
-    class ProductViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    class ProductViewHolder(view: View, private val whenClickOnItem: (product: Product) -> Unit) :
+        RecyclerView.ViewHolder(view) {
         private val binding = ProductItemBinding.bind(view)
 
         fun bind(productItem: AllProductsItem.ProductItem) {
@@ -73,6 +77,9 @@ class AllProductsAdapter(
                 tvProductItemDescription.text = productItem.product.description
                 tvProductItemPrice.text = formatValueAsBrazilianCurrency(productItem.product.price)
                 ivProductItemPicture.TryLoadImage(productItem.product.image)
+                itemView.setOnClickListener {
+                    whenClickOnItem(productItem.product)
+                }
             }
         }
     }

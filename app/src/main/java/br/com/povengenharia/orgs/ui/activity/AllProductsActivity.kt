@@ -1,5 +1,6 @@
 package br.com.povengenharia.orgs.ui.activity
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -17,7 +18,15 @@ class AllProductsActivity : AppCompatActivity() {
     }
 
     private val adapter by lazy {
-        AllProductsAdapter(this)
+        AllProductsAdapter(this).apply {
+            whenClickOnItem = {product ->
+                val intent = Intent(this@AllProductsActivity, ProductDetailsActivity::class.java).apply {
+                    putExtra(CHAVE_PRODUTO_ID, product.id)
+                }
+                startActivity(intent)
+
+            }
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,7 +37,9 @@ class AllProductsActivity : AppCompatActivity() {
     }
 
     private fun setupRecyclerView() {
-        binding.rvActivityAllProductsAllProducts.adapter = adapter
+        with(binding.rvActivityAllProductsAllProducts) {
+            adapter = this@AllProductsActivity.adapter
+        }
     }
 
     private fun loadAllProducts() {
