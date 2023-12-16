@@ -1,4 +1,4 @@
-# Orgs V4.0.0
+# Orgs V4.1.0
 Este é um aplicativo para gerenciar produtos. Com ele, é possível adicionar, editar e exibir uma lista de produtos, incluindo imagem, nome, descrição e preço. Além disso, é possível visualizar detalhes dos produtos,ordená-los de diferentes maneiras na lista e realizar operações de banco de dados de forma assíncrona para uma melhor performance.
 
 ## 🎥 Demonstração
@@ -37,13 +37,13 @@ Este é um aplicativo para gerenciar produtos. Com ele, é possível adicionar, 
 - **Tela de Perfil do Usuário**: Exibição de informações do usuário e opção para logout.
 
 
-## 🌟 Novidades na versão 4.0.0
+## 🌟 Novidades na versão 4.1.0
 
-- **Autenticação de Usuários**: Implementação de telas de login e registro, permitindo que cada usuário tenha sua própria lista de produtos.
-- **Gerenciamento de Sessão do Usuário**: Adição de lógica para gerenciar sessões de usuários logados, utilizando Kotlin DataStore.
-- **Controle de Acesso**: Produtos agora são associados a usuários específicos, permitindo que cada um gerencie sua própria lista.
-- **Logout**: Funcionalidade de logout implementada, permitindo que os usuários encerrem suas sessões.
-- **Tela de Detalhes do Usuário**: Nova tela que exibe informações do usuário e oferece a opção de logout.
+- **Visualização de Todos os Produtos**: Implementação da tela 'AllProductsActivity' para exibir todos os produtos e informações dos usuários relacionados.
+- **Navegação para Detalhes do Produto**: Configuração do 'AllProductsAdapter' para permitir a navegação até os detalhes do produto selecionado.
+- **Autocomplete em ProductFormActivity**: Adição de campo Autocomplete para facilitar a seleção de usuários ao salvar produtos sem usuário associado.
+- **Ajustes nos Filtros de Produtos**: Os filtros na tela de lista de produtos agora consideram apenas os produtos do usuário logado.
+- **Atualizações em AllProductsActivity**: Implementação do método onResume para garantir a atualização correta dos dados exibidos.
 
 
 ## 🚀 Futuras Implementações
@@ -79,6 +79,9 @@ Este é um aplicativo para gerenciar produtos. Com ele, é possível adicionar, 
 - `Relacionamento no Room`: Configuração de entidades para estabelecer relacionamentos, como produtos associados a usuários.
 
 ## 📝 Histórico de Versões
+
+### v4.1.0
+- Novas funcionalidades e melhorias na usabilidade.
 
 ### v4.0.0
 - Lançamento das funcionalidades de autenticação e controle de produtos por usuário.
