@@ -50,23 +50,29 @@ Este é um aplicativo para gerenciar produtos. Com ele, é possível adicionar, 
 ## 🔨 Técnicas e tecnologias no projeto
 
 - `Kotlin`: Linguagem de programação utilizada para desenvolver o aplicativo.
-- `View Binding`: busca de views do layout de forma segura
-- `Coil`: carregar imagens via requisição HTTP
-- `Fontes personalizadas`: configuração para adicionar novas fontes
-- `Extension functions`: adicionar comportamentos em outras classes para reutilizá-los como funções de extensão para carregar imagens e formatar valores em moeda.
-- `Personalização de tema`: modificação de cores para o tema do App
-- `Layout para Activities`
-  - `ContraintLayout` : ViewGroup padrão para implementar todos os layouts
-  - `ImageView`: View para apresentar imagens no App
-  - `Material Design Components`: Incluindo TextInputLayout para uma experiência de usuário melhorada e interfaces mais intuitivas.
-  - `RecyclerView`: listagem das produtos
-  - `CardView`: container para apresentar cada produto na lista de produtos 
-  - `Button` :Botões interativos.
-  - `AlertDialog`: Exibição de formulário para carregar novas imagens do produto
-- `Room Database`: Persistência de dados com Room para armazenar os produtos localmente.
-- `Flow`: Para lidar com sequências assíncronas de dados.
-- `setOnLongClickListener`: Utilização de gestos para clicks longos para ativação de popupMenu que facilitam a edição e exclusão rápida de produtos.
-- `PopupMenu`: Utilização de menus contextuais para oferecer opções de ordenação de produtos na lista.
+- `View Binding`: Busca de views do layout de forma segura.
+- `Coil`: Carregar imagens via requisição HTTP.
+- `Fontes personalizadas`: Configuração para adicionar novas fontes.
+- `Extension functions`: Funções de extensão para carregar imagens e formatar valores em moeda.
+- `Personalização de tema`: Modificação de cores para o tema do App.
+- `Layout para Activities`:
+  - `ContraintLayout`: ViewGroup padrão para implementar todos os layouts.
+  - `ImageView`: View para apresentar imagens no App.
+  - `Material Design Components`: Incluindo TextInputLayout para experiência de usuário melhorada.
+  - `RecyclerView`: Listagem dos produtos.
+  - `CardView`: Container para apresentar cada produto na lista.
+  - `Button`: Botões interativos.
+  - `AlertDialog`: Exibição de formulário para carregar novas imagens do produto.
+- `Room Database`: Persistência de dados com Room para armazenar produtos e usuários.
+- `Flow`: Uso de sequências assíncronas de dados.
+- `setOnLongClickListener`: Gestos para clicks longos para edição e exclusão rápida de produtos.
+- `PopupMenu`: Menus contextuais para ordenação de produtos.
+- `DataStore`: Armazenamento de tipos primitivos, como o ID do usuário autenticado.
+- `Migration`: Evolução do schema do banco de dados conforme as entidades do Room são modificadas.
+- `Coroutines e Flow`: Comunicação assíncrona com Room e DataStore.
+- `StateFlow`: Permite a alteração do valor de um Flow fora do seu builder.
+- `Activity base`: Código comum entre Activities para gerenciamento de autenticação e sessão do usuário.
+- `Relacionamento no Room`: Configuração de entidades para estabelecer relacionamentos, como produtos associados a usuários.
 
 ## 📝 Histórico de Versões
 
