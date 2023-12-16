@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import br.com.povengenharia.orgs.R
@@ -73,7 +72,7 @@ class ProductDetailsActivity : AppCompatActivity() {
 
     private fun tryLoadProduct() {
         productId = intent.getLongExtra(CHAVE_PRODUTO_ID, 0L)
-        Toast.makeText(this, "Produto ID: $productId", Toast.LENGTH_SHORT).show()
+
     }
 
     private fun fillField(productLoad: Product) {

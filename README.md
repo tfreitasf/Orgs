@@ -1,26 +1,24 @@
-# Orgs V4.0.0
+# Orgs V4.1.0
 Este é um aplicativo para gerenciar produtos. Com ele, é possível adicionar, editar e exibir uma lista de produtos, incluindo imagem, nome, descrição e preço. Além disso, é possível visualizar detalhes dos produtos,ordená-los de diferentes maneiras na lista e realizar operações de banco de dados de forma assíncrona para uma melhor performance.
 
 ## 🎥 Demonstração
 
-<p float="center">
-  <img src="https://github.com/tfreitasf/Orgs/assets/83042767/26dcaf85-f3db-43b3-8497-209eaa378729" width="350" />
-</p>
+
 
 
 <p float="left">  
   <img src="https://github.com/tfreitasf/Orgs/assets/83042767/9d35f605-a6c7-4dcf-b413-b57753c3ef9b" width="300" />
   <img src="https://github.com/tfreitasf/Orgs/assets/83042767/c53a911d-d97b-4660-92a6-1045ff966be7" width="300" />
-  <img src="https://github.com/tfreitasf/Orgs/assets/83042767/7c3a7ab0-9c9d-4694-84e0-5a65185c012f" width="300" />
-  <img src="https://github.com/tfreitasf/Orgs/assets/83042767/c6ed6fe6-70ba-4687-9044-95b8bbef2028" width="300" />
-  <img src="https://github.com/tfreitasf/Orgs/assets/83042767/3425376d-1401-4afe-96e2-53f3488806d0" width="300" />
+  <img src="https://github.com/tfreitasf/Orgs/assets/83042767/aa2fd84b-40b6-4755-ae67-03a7b7844010" width="300" />
+  <img src="https://github.com/tfreitasf/Orgs/assets/83042767/b4b3ec7a-6510-4759-a7dc-2ae5ac1ebaf9" width="300" />
+  <img src="https://github.com/tfreitasf/Orgs/assets/83042767/8db346df-1627-460a-8b79-bc38ea7ee041" width="300" />
   <img src="https://github.com/tfreitasf/Orgs/assets/83042767/ee61504a-03bd-4643-a540-0aef0873aca7" width="300" /> 
   <img src="https://github.com/tfreitasf/Orgs/assets/83042767/950b06a8-6c49-4342-8d4f-068c1e181101" width="300" />
   <img src="https://github.com/tfreitasf/Orgs/assets/83042767/937bf4e5-4bb5-4fbe-ab93-fb85b8bf16dd" width="300" />
-  <img src="https://github.com/tfreitasf/Orgs/assets/83042767/fa406ab8-9a26-40cc-ac64-d259b2a88181" width="300" />
-  <img src="https://github.com/tfreitasf/Orgs/assets/83042767/9bab6444-59fb-44da-97dd-1469c5190697" width="300" />  
+  <img src="https://github.com/tfreitasf/Orgs/assets/83042767/fa406ab8-9a26-40cc-ac64-d259b2a88181" width="300" />  
   <img src="https://github.com/tfreitasf/Orgs/assets/83042767/6a658eea-f5bb-428e-93d5-af4d76675522" width="300" />  
   <img src="https://github.com/tfreitasf/Orgs/assets/83042767/ff67a19f-13ac-4749-8ab2-3e46f855902f" width="300" /> 
+  <img src="https://github.com/tfreitasf/Orgs/assets/83042767/90f98b00-184d-4201-85d4-6c4fee8d0516" width="300" /> 
 </p>
 
 
@@ -37,13 +35,13 @@ Este é um aplicativo para gerenciar produtos. Com ele, é possível adicionar, 
 - **Tela de Perfil do Usuário**: Exibição de informações do usuário e opção para logout.
 
 
-## 🌟 Novidades na versão 4.0.0
+## 🌟 Novidades na versão 4.1.0
 
-- **Autenticação de Usuários**: Implementação de telas de login e registro, permitindo que cada usuário tenha sua própria lista de produtos.
-- **Gerenciamento de Sessão do Usuário**: Adição de lógica para gerenciar sessões de usuários logados, utilizando Kotlin DataStore.
-- **Controle de Acesso**: Produtos agora são associados a usuários específicos, permitindo que cada um gerencie sua própria lista.
-- **Logout**: Funcionalidade de logout implementada, permitindo que os usuários encerrem suas sessões.
-- **Tela de Detalhes do Usuário**: Nova tela que exibe informações do usuário e oferece a opção de logout.
+- **Visualização de Todos os Produtos**: Implementação da tela 'AllProductsActivity' para exibir todos os produtos e informações dos usuários relacionados.
+- **Navegação para Detalhes do Produto**: Configuração do 'AllProductsAdapter' para permitir a navegação até os detalhes do produto selecionado.
+- **Autocomplete em ProductFormActivity**: Adição de campo Autocomplete para facilitar a seleção de usuários ao salvar produtos sem usuário associado.
+- **Ajustes nos Filtros de Produtos**: Os filtros na tela de lista de produtos agora consideram apenas os produtos do usuário logado.
+- **Atualizações em AllProductsActivity**: Implementação do método onResume para garantir a atualização correta dos dados exibidos.
 
 
 ## 🚀 Futuras Implementações
@@ -79,6 +77,9 @@ Este é um aplicativo para gerenciar produtos. Com ele, é possível adicionar, 
 - `Relacionamento no Room`: Configuração de entidades para estabelecer relacionamentos, como produtos associados a usuários.
 
 ## 📝 Histórico de Versões
+
+### v4.1.0
+- Novas funcionalidades e melhorias na usabilidade.
 
 ### v4.0.0
 - Lançamento das funcionalidades de autenticação e controle de produtos por usuário.
