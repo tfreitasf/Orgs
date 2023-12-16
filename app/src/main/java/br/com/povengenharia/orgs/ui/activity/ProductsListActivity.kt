@@ -59,16 +59,16 @@ class ProductsListActivity : UserProductListManager() {
             launch {
                 user
                     .filterNotNull()
-                    .collect {
-                        searchUserProducts()
+                    .collect {user ->
+                        searchUserProducts(user.id)
                     }
             }
         }
     }
 
 
-    private suspend fun searchUserProducts() {
-        productDao.getAll().collect { products ->
+    private suspend fun searchUserProducts(userId: String) {
+        productDao.fetchAllForUser(userId).collect { products ->
             adapter.update(products)
         }
     }
@@ -108,7 +108,11 @@ class ProductsListActivity : UserProductListManager() {
                 R.id.menu_order_value_low_to_high -> productDao.getAllOrderByPriceAsc()
                     .collect { products -> adapter.update(products) }
 
-                R.id.menu_order_none -> searchUserProducts()
+                R.id.menu_order_none -> {
+                    user.value?.let { loggedUser ->
+                        searchUserProducts(loggedUser.id)
+                    }
+                }
 
                 else -> return@launch
             }

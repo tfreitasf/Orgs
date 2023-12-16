@@ -43,4 +43,7 @@ interface ProductDao {
 
     @Query("SELECT * FROM Product ORDER BY price ASC")
     fun getAllOrderByPriceAsc(): Flow<List<Product>>
+
+    @Query("SELECT * FROM Product WHERE userId = :userId")
+    fun fetchAllForUser(userId: String) : Flow<List<Product>>
 }

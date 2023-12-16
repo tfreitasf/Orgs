@@ -1,7 +1,6 @@
 package br.com.povengenharia.orgs.ui.activity
 
 import android.os.Bundle
-import android.util.Log
 import androidx.lifecycle.lifecycleScope
 import br.com.povengenharia.orgs.R
 import br.com.povengenharia.orgs.database.AppDatabase
@@ -12,7 +11,6 @@ import br.com.povengenharia.orgs.model.Product
 import br.com.povengenharia.orgs.ui.activity.userproducts.UserProductListManager
 import br.com.povengenharia.orgs.ui.dialog.ImageDialogForm
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -33,8 +31,6 @@ class ProductFormActivity : UserProductListManager() {
     }
 
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -50,14 +46,7 @@ class ProductFormActivity : UserProductListManager() {
                 }
         }
         tryLoadProduct()
-        lifecycleScope.launch{
-            user
-                .filterNotNull()
-                .collect(){
-                    Log.i("ProductForm", "onCreate: $it")
 
-            }
-        }
     }
 
     private fun tryLoadProduct() {
@@ -93,19 +82,23 @@ class ProductFormActivity : UserProductListManager() {
     private fun saveNewProduct() {
         val btnSave = binding.btnProductFormSave
         btnSave.setOnClickListener {
-            val newProdutct = createNewProductFromForm()
+
             lifecycleScope.launch {
-                if (productId > 0) {
-                    productDao.updateProduct(newProdutct)
-                } else {
-                    productDao.add(newProdutct)
+                user.value?.let {user ->
+                    val newProduct = createNewProductFromForm(user.id)
+                    if (productId > 0) {
+                        productDao.updateProduct(newProduct)
+                    } else {
+                        productDao.add(newProduct)
+                    }
+                    finish()
                 }
-                finish()
+
             }
         }
     }
 
-    private fun createNewProductFromForm(): Product {
+    private fun createNewProductFromForm(userId: String): Product {
         val nameField = binding.etProductFormName
         val descriptionField = binding.etProductFormDescription
         val priceField = binding.etProductFormPrice
@@ -119,12 +112,14 @@ class ProductFormActivity : UserProductListManager() {
             BigDecimal(priceInText)
         }
 
+
         return Product(
             id = productId,
             name = name,
             description = description,
             price = price,
-            image = url
+            image = url,
+            userId = userId
         )
     }
 }
