@@ -22,6 +22,10 @@
         app:showAsAction="ifRoom">
         <menu>
             <item
+                android:id="@+id/menu_show_all_products"
+                android:title="@string/txt_menu_all_products"/>
+
+            <item
                 android:id="@+id/menu_order_name_ascending"
                 android:title="@string/txt_sort_name_a_z" />
 

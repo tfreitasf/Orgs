@@ -90,6 +90,10 @@ class ProductsListActivity : UserProductListManager() {
                     logoutUser()
                 }
 
+                R.id.menu_show_all_products ->{
+                    goTo(AllProductsActivity::class.java)
+                }
+
                 R.id.menu_order_name_ascending -> productDao.getAllOrderByNameAsc()
                     .collect { products -> adapter.update(products) }
 
