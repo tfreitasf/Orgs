@@ -9,6 +9,8 @@ Este é um aplicativo para gerenciar produtos. Com ele, é possível adicionar, 
 
 
 <p float="left">  
+  <img src="https://github.com/tfreitasf/Orgs/assets/83042767/9d35f605-a6c7-4dcf-b413-b57753c3ef9b" width="300" />
+  <img src="https://github.com/tfreitasf/Orgs/assets/83042767/c53a911d-d97b-4660-92a6-1045ff966be7" width="300" />
   <img src="https://github.com/tfreitasf/Orgs/assets/83042767/7c3a7ab0-9c9d-4694-84e0-5a65185c012f" width="300" />
   <img src="https://github.com/tfreitasf/Orgs/assets/83042767/c6ed6fe6-70ba-4687-9044-95b8bbef2028" width="300" />
   <img src="https://github.com/tfreitasf/Orgs/assets/83042767/3425376d-1401-4afe-96e2-53f3488806d0" width="300" />
@@ -16,7 +18,9 @@ Este é um aplicativo para gerenciar produtos. Com ele, é possível adicionar, 
   <img src="https://github.com/tfreitasf/Orgs/assets/83042767/950b06a8-6c49-4342-8d4f-068c1e181101" width="300" />
   <img src="https://github.com/tfreitasf/Orgs/assets/83042767/937bf4e5-4bb5-4fbe-ab93-fb85b8bf16dd" width="300" />
   <img src="https://github.com/tfreitasf/Orgs/assets/83042767/fa406ab8-9a26-40cc-ac64-d259b2a88181" width="300" />
+  <img src="https://github.com/tfreitasf/Orgs/assets/83042767/9bab6444-59fb-44da-97dd-1469c5190697" width="300" />  
   <img src="https://github.com/tfreitasf/Orgs/assets/83042767/6a658eea-f5bb-428e-93d5-af4d76675522" width="300" />  
+  <img src="https://github.com/tfreitasf/Orgs/assets/83042767/ff67a19f-13ac-4749-8ab2-3e46f855902f" width="300" /> 
 </p>
 
 
