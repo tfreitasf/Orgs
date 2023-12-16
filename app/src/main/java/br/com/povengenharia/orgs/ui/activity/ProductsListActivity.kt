@@ -5,17 +5,19 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import br.com.povengenharia.orgs.R
 import br.com.povengenharia.orgs.database.AppDatabase
 import br.com.povengenharia.orgs.databinding.ActivityProductsListBinding
+import br.com.povengenharia.orgs.extensions.goTo
+import br.com.povengenharia.orgs.ui.activity.userproducts.UserProductListManager
 import br.com.povengenharia.orgs.ui.recyclerview.adapter.ProductsListAdapter
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class ProductsListActivity : AppCompatActivity() {
+class ProductsListActivity : UserProductListManager() {
 
     private val binding by lazy {
         ActivityProductsListBinding.inflate(layoutInflater)
@@ -47,15 +49,27 @@ class ProductsListActivity : AppCompatActivity() {
         db.productDao()
     }
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         setupRecyclerView()
         configureAddProductFab()
         lifecycleScope.launch {
-            productDao.getAll().collect { products ->
-                adapter.update(products)
+            launch {
+                user
+                    .filterNotNull()
+                    .collect {user ->
+                        searchUserProducts(user.id)
+                    }
             }
+        }
+    }
+
+
+    private suspend fun searchUserProducts(userId: String) {
+        productDao.fetchAllForUser(userId).collect { products ->
+            adapter.update(products)
         }
     }
 
@@ -68,6 +82,14 @@ class ProductsListActivity : AppCompatActivity() {
         lifecycleScope.launch {
 
             when (item.itemId) {
+                R.id.menu_produtct_list_account ->{
+                    goTo(UserProfileActivity::class.java)
+                }
+
+                R.id.menu_product_list_logout -> {
+                    logoutUser()
+                }
+
                 R.id.menu_order_name_ascending -> productDao.getAllOrderByNameAsc()
                     .collect { products -> adapter.update(products) }
 
@@ -86,16 +108,18 @@ class ProductsListActivity : AppCompatActivity() {
                 R.id.menu_order_value_low_to_high -> productDao.getAllOrderByPriceAsc()
                     .collect { products -> adapter.update(products) }
 
-                R.id.menu_order_none -> productDao.getAll()
-                    .collect { products -> adapter.update(products) }
+                R.id.menu_order_none -> {
+                    user.value?.let { loggedUser ->
+                        searchUserProducts(loggedUser.id)
+                    }
+                }
 
                 else -> return@launch
             }
-
         }
-
         return super.onOptionsItemSelected(item)
     }
+
 
     private fun configureAddProductFab() {
         val fab = binding.fabAddProduct

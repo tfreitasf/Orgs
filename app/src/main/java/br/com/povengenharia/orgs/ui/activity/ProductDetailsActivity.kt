@@ -55,10 +55,7 @@ class ProductDetailsActivity : AppCompatActivity() {
                     }
                     finish()
                 }
-
             }
-
-
             R.id.menu_product_details_edit -> {
                 Intent(this, ProductFormActivity::class.java).apply {
                     putExtra(CHAVE_PRODUTO_ID, productId)

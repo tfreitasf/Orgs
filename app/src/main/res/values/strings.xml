@@ -18,4 +18,18 @@
     <string name="txt_price_higher_lower">Valor maior para menor</string>
     <string name="txt_price_lower_higher">Valor menor para maior</string>
     <string name="txt_no_ordering">Sem ordenação</string>
+    <string name="txt_login_activity_title">ORGS</string>
+    <string name="txt_activity_login_user">Usuário</string>
+    <string name="txt_activity_login_password">Senha</string>
+    <string name="txt_activity_login_login">Entrar</string>
+    <string name="txt_activity_login_register_user">Cadastrar Usuário</string>
+    <string name="txt_activity_register_user_form_user">Usuário</string>
+    <string name="txt_activity_register_user_form_name">Nome</string>
+    <string name="txt_activity_register_user_form_password">Senha</string>
+    <string name="txt_activity_register_user_form_register">Cadastrar</string>
+    <string name="txt_menu_product_list_logout">Sair</string>
+    <string name="txt_toast_authentication_failure">Falha na autenticação</string>
+    <string name="txt_toast_failed_register_user">Falha ao cadastrar usuário</string>
+    <string name="txt_menu_product_list_user_profile">Perfil do Usuário</string>
+    <string name="txt_btn_activity_user_profile_logout">SAIR DO APP</string>
 </resources>
