@@ -11,7 +11,7 @@ import br.com.povengenharia.orgs.database.dao.UserDao
 import br.com.povengenharia.orgs.model.Product
 import br.com.povengenharia.orgs.model.User
 
-@Database(entities = [Product::class, User::class], version = 3, exportSchema = true)
+@Database(entities = [Product::class, User::class], version = 4, exportSchema = true)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
 
