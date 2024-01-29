@@ -4,8 +4,6 @@ Este é um aplicativo para gerenciar produtos. Com ele, é possível adicionar, 
 ## 🎥 Demonstração
 
 
-
-
 <p float="left">  
   <img src="https://github.com/tfreitasf/Orgs/assets/83042767/9d35f605-a6c7-4dcf-b413-b57753c3ef9b" width="300" />
   <img src="https://github.com/tfreitasf/Orgs/assets/83042767/c53a911d-d97b-4660-92a6-1045ff966be7" width="300" />
